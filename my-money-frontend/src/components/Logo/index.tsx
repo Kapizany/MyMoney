@@ -8,4 +8,4 @@ export const Logo = () => {
       M<Box fontSize="1.2rem" display="inline" color="dollar.900">y</Box>M<Box fontSize="1.2rem" display="inline" color="dollar.900">oney</Box>
     </Heading>
   </Box>
-}
+};

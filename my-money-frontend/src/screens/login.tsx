@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { FaDollarSign } from 'react-icons/fa';
-import { Box, Button, Icon, Link, Heading, Flex, Stack, textDecoration } from '@chakra-ui/react'
+import { Button, Link, Flex, Stack} from '@chakra-ui/react'
 import { loginAPI } from '../api/login';
 import { Input } from '../components/Login/Input';
 import { BackgroundScreen } from '../components/BackgroundScreen';

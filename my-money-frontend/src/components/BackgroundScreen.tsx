@@ -13,4 +13,4 @@ export const BackgroundScreen:React.FC<{children:React.ReactChild}> = ({children
         {children}
       </Flex>
     </ChakraProvider>
-}
+};

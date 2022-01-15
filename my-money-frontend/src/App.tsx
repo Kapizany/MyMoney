@@ -1,8 +1,8 @@
-import { Login } from "./screens/login";
+import { Routes } from "./routes";
 
 
 function App() {
-    return <Login />
+    return <Routes />
 }
 
 export default App;
