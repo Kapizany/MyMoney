@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from rest_framework import viewsets
-from .serializers import UserAuthorizationSerializer, UserSerializer
+from .serializers import UserSerializer
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
@@ -12,10 +12,10 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all().order_by('-date_joined')
     serializer_class = UserSerializer
 
-    @action(detail=False, methods=['get'])
-    def example_view(request, format=None):
+    @action(detail=False, methods=['get'], name="Get Authorization")
+    def get_auth(self, format=None):
         content = {
-            'user': str(request.user),  # django.contrib.auth.User instance.
-            'auth': str(request.auth),  # None
+            'user': str(self.request.user),  
+            'auth': str(self.request.auth), 
         }
-        return Response(UserAuthorizationSerializer(data=content))
+        return Response(content)

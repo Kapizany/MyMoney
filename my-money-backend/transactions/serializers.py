@@ -7,7 +7,3 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         model = User
         fields = ['url', 'username', 'email']
 
-
-class UserAuthorizationSerializer(serializers.Serializer):
-    user=UserSerializer()
-    auth=serializers.CharField()
