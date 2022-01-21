@@ -15,7 +15,7 @@ class UserViewSet(viewsets.ModelViewSet):
     @action(detail=False, methods=['get'], name="Get Authorization")
     def get_auth(self, format=None):
         content = {
-            'user': str(self.request.user),  
-            'auth': str(self.request.auth), 
+            'user': str(self.request.user),
+            'auth': str(self.request.auth),
         }
         return Response(content)

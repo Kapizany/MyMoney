@@ -4,11 +4,13 @@ import { loginAPI } from '../api/login';
 import { Input } from '../components/Login/Input';
 import { BackgroundScreen } from '../components/BackgroundScreen';
 import { Logo } from '../components/Logo';
+import { useNavigate } from 'react-router';
 
 
 export function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const history = useNavigate();
 
   function handleInput(event: React.ChangeEvent<HTMLInputElement>, setFunction: (arg: string) => void) {
     setFunction(event.target.value)
@@ -19,8 +21,9 @@ export function Login() {
     const response = await loginAPI.createToken({
       "username":username,
       "password":password,
-    })
-    localStorage.setItem("mymoney_token",response.data.token)
+    });
+    localStorage.setItem("mymoney_token",response.data.token);
+    history("/dashboard");
   }
 
   return <BackgroundScreen>
