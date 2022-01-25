@@ -1,7 +1,8 @@
-import { Flex, Icon, Menu, MenuButton, MenuItem, MenuList, Portal, Text } from "@chakra-ui/react"
+import { Avatar, Flex, Icon, Menu, MenuButton, MenuItem, MenuList, Portal, Text } from "@chakra-ui/react"
 import { FaAngleDown } from "react-icons/fa";
 import ReactCountryFlag from "react-country-flag";
 import { Logo } from "../Logo"
+
 
 export const Header = () => {
   return (
@@ -13,17 +14,15 @@ export const Header = () => {
       justifyContent="space-between"
     >
       <Flex w="25vw" justifyContent="space-between">
-        <Flex>
-            <Logo stack="horizontal" logoImageSize="4vh" logoMSize="3vh" logoTextSize="2vh" logoTextColor="gray.50" />
-        </Flex>
-        <Flex>
-            um dois
-        </Flex>
+        <Logo stack="horizontal" logoImageSize="4vh" logoMSize="3vh" logoTextSize="2vh" logoTextColor="gray.50" />
       </Flex>
       <Flex pr="1rem">
-      <ReactCountryFlag countryCode="GB" />
-        <Text px="1rem">English</Text>
-        < HeaderDropdownMenu />
+        <ReactCountryFlag countryCode="GB" />
+        <Text px="0.5rem">English</Text>
+        <HeaderDropdownMenu />
+        <Avatar size='sm' ml="2rem" />  {/* other props: name='Kent Dodds' src='https://bit.ly/kent-c-dodds' */}
+        <Text mx="0.5rem">Name</Text>
+        <HeaderDropdownMenu />
       </Flex>
     </Flex>
   )
