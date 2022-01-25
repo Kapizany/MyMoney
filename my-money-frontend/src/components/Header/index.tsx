@@ -1,4 +1,7 @@
-import { Flex } from "@chakra-ui/react"
+import { Flex, Icon, Menu, MenuButton, MenuItem, MenuList, Portal, Text } from "@chakra-ui/react"
+import { FaAngleDown } from "react-icons/fa";
+import ReactCountryFlag from "react-country-flag";
+import { Logo } from "../Logo"
 
 export const Header = () => {
   return (
@@ -11,15 +14,35 @@ export const Header = () => {
     >
       <Flex w="25vw" justifyContent="space-between">
         <Flex>
-            um um
+            <Logo stack="horizontal" logoImageSize="4vh" logoMSize="3vh" logoTextSize="2vh" logoTextColor="gray.50" />
         </Flex>
         <Flex>
             um dois
         </Flex>
       </Flex>
-      <Flex>
-        Segunda parte
+      <Flex pr="1rem">
+      <ReactCountryFlag countryCode="GB" />
+        <Text px="1rem">English</Text>
+        < HeaderDropdownMenu />
       </Flex>
     </Flex>
   )
+}
+
+export const HeaderDropdownMenu = () => {
+  return (
+    <Menu>
+      <MenuButton>
+        <Icon as={FaAngleDown} />
+      </MenuButton>
+      <Portal>
+        <MenuList>
+          <MenuItem>Menu 1</MenuItem>
+          <MenuItem>New Window</MenuItem>
+          <MenuItem>Open Closed Tab</MenuItem>
+          <MenuItem>Open File</MenuItem>
+        </MenuList>
+      </Portal>
+    </Menu>
+  );
 }
