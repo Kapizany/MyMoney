@@ -1,3 +1,8 @@
+import { BackgroundScreen } from "../components/BackgroundScreen";
+import { Header } from "../components/Header";
+
 export function Dashboard() {
-    return <h1>Dashboard</h1>
+    return  <BackgroundScreen alignItems="normal" justifyContent="flex-start">
+      <Header />
+    </BackgroundScreen>
 }
