@@ -1,5 +1,5 @@
 export interface BackgroundScreenProps {
-    children: React.ReactChild;
+    children: React.ReactNode;
     alignItems?: string;
     justifyContent?: string;
 };

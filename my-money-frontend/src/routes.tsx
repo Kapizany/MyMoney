@@ -12,13 +12,15 @@ import { Login } from "./screens/login";
 
 
 export const Routes = () => {
+  const [selectedPage, setSelectedPage] = useState("dashboard");
+
   return (
     <BrowserRouter>
       <Switch>
         <Route path="/" element={<Navigate to="/dashboard" />} />
         <Route path="/login" element={<Login />} />
         <Route element={<RequireAuth />}>
-            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/dashboard" element={<Dashboard selectedPage={selectedPage} setSelectedPage={setSelectedPage} />} />
         </Route>
       </Switch>
     </BrowserRouter>

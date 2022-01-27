@@ -1,13 +1,8 @@
 import { Box, Heading, Icon, Stack } from "@chakra-ui/react";
 import { FaDollarSign } from "react-icons/fa";
+import { LogoProps } from "../../interfaces/logo";
 
-interface LogoProps {
-  stack?: "vertical"|"horizontal";
-  logoImageSize?:string;
-  logoMSize?:string;
-  logoTextSize?:string;
-  logoTextColor?: string;
-}
+
 export const Logo:React.FC<LogoProps> = (props) => {
   const logoAlign = props.stack == "horizontal" ? "row" : "column";
   const paddingY = props.stack == "horizontal" ? "5%" : undefined;

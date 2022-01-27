@@ -14,7 +14,7 @@ export function Input({ name, label, ...rest }: InputProps) {
         bgColor="gray.50"
         variant="flushed"
         _hover={{
-          bgColor: 'gray.50'
+          bgColor: 'gray.50',
         }}
         size="lg"
         {...rest}
