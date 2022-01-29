@@ -17,10 +17,11 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework.authtoken import views
 from rest_framework import routers
-from transactions.views import UserViewSet
+from transactions.views import PersonViewSet, TransactionViewSet
 
 router = routers.DefaultRouter()
-router.register(r'users', UserViewSet)
+router.register(r'users', PersonViewSet)
+router.register(r'transactions', TransactionViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
