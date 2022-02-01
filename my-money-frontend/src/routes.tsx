@@ -9,6 +9,7 @@ import {
 import { loginAPI } from "./api/login";
 import { Dashboard } from "./screens/dashboard";
 import { Login } from "./screens/login";
+import { Transactions } from "./screens/transaction";
 
 
 export const Routes = () => {
@@ -21,6 +22,7 @@ export const Routes = () => {
         <Route path="/login" element={<Login />} />
         <Route element={<RequireAuth />}>
             <Route path="/dashboard" element={<Dashboard selectedPage={selectedPage} setSelectedPage={setSelectedPage} />} />
+            <Route path="/transactions" element={<Transactions selectedPage={selectedPage} setSelectedPage={setSelectedPage} />} />
         </Route>
       </Switch>
     </BrowserRouter>

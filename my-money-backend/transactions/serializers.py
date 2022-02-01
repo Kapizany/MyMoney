@@ -8,7 +8,8 @@ class PersonSerializer(serializers.HyperlinkedModelSerializer):
         fields = ['id', 'full_name', 'email']
 
 
-class TransactionSerializer(serializers.HyperlinkedModelSerializer):
+class TransactionSerializer(serializers.ModelSerializer):
+    user=serializers.EmailField(source='user.email')
     class Meta:
         model = Transaction
-        fields = "__all__"
+        fields = ['id', 'value', 'date', 'description', 'user']
