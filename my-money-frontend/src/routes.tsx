@@ -9,7 +9,7 @@ import {
 import { loginAPI } from "./api/login";
 import { Dashboard } from "./screens/dashboard";
 import { Login } from "./screens/login";
-import { Transactions } from "./screens/transaction";
+import { Transactions } from "./screens/transactions";
 
 
 export const Routes = () => {

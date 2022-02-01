@@ -13,7 +13,7 @@ export const Header = () => {
       bg="gray.700"
       justifyContent="space-between"
       px="1rem"
-      boxShadow="rgba(0, 0, 0, 0.1) 0px 0px 0px 1px,rgba(0, 0, 0, 0.2) 0px 3px 5px,rgba(0, 0, 0, 0.4) 0px 5px 7px"
+      boxShadow="0px 7px 5px -4px rgba(0,0,0,0.4)" // "rgba(0, 0, 0, 0.1) 0px 0px 0px 1px,rgba(0, 0, 0, 0.2) 0px 3px 5px,rgba(0, 0, 0, 0.4) 0px 5px 7px"
     >
       <Flex w="25vw" justifyContent="space-between" >
         <Logo stack="horizontal" logoImageSize="4vh" logoMSize="3vh" logoTextSize="2vh" logoTextColor="gray.50" />
