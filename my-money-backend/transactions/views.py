@@ -1,16 +1,16 @@
-from django.contrib.auth.models import User
 from rest_framework import viewsets
-from .serializers import UserSerializer
+from .serializers import PersonSerializer, TransactionSerializer
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from .models import Person, Transaction
 
 
-class UserViewSet(viewsets.ModelViewSet):
+class PersonViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows users to be viewed or edited.
     """
-    queryset = User.objects.all().order_by('-date_joined')
-    serializer_class = UserSerializer
+    queryset = Person.objects.all()
+    serializer_class = PersonSerializer
 
     @action(detail=False, methods=['get'], name="Get Authorization")
     def get_auth(self, format=None):
@@ -19,3 +19,10 @@ class UserViewSet(viewsets.ModelViewSet):
             'auth': str(self.request.auth),
         }
         return Response(content)
+
+class TransactionViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = Transaction.objects.all()
+    serializer_class = TransactionSerializer

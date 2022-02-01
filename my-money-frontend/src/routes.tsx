@@ -9,16 +9,20 @@ import {
 import { loginAPI } from "./api/login";
 import { Dashboard } from "./screens/dashboard";
 import { Login } from "./screens/login";
+import { Transactions } from "./screens/transaction";
 
 
 export const Routes = () => {
+  const [selectedPage, setSelectedPage] = useState("dashboard");
+
   return (
     <BrowserRouter>
       <Switch>
         <Route path="/" element={<Navigate to="/dashboard" />} />
         <Route path="/login" element={<Login />} />
         <Route element={<RequireAuth />}>
-            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/dashboard" element={<Dashboard selectedPage={selectedPage} setSelectedPage={setSelectedPage} />} />
+            <Route path="/transactions" element={<Transactions selectedPage={selectedPage} setSelectedPage={setSelectedPage} />} />
         </Route>
       </Switch>
     </BrowserRouter>
