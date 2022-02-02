@@ -6,6 +6,29 @@ import { DashboardProps } from "../interfaces/dashboard";
 
 export function Transactions({selectedPage, setSelectedPage}: DashboardProps) {
     setSelectedPage("transactions");
+    const mockedTableData = [
+      {
+        "id": 1,
+        "value": 1,
+        "date": "2022-02-02",
+        "description": "1",
+        "user": "admin@example.com"
+      },
+      {
+        "id": 2,
+        "value": 2,
+        "date": "2022-02-02",
+        "description": "2",
+        "user": "admin@example.com"
+      },
+      {
+        "id": 3,
+        "value": 3,
+        "date": "2022-02-02",
+        "description": "3",
+        "user": "admin@example.com"
+      },
+    ]
     return  <BackgroundScreen alignItems="normal" justifyContent="flex-start">
       <Header />
       <SideBarMenu selectedPage={selectedPage}/>
@@ -39,33 +62,21 @@ export function Transactions({selectedPage, setSelectedPage}: DashboardProps) {
             <Tr>
               <Th>Data</Th>
               <Th>Day</Th>
-              <Th>Time</Th>
               <Th>Description</Th>
               <Th isNumeric>Value (USD)</Th>
             </Tr>
           </Thead>
           <Tbody>
-            <Tr>
-              <Td>January 30, 2022</Td>
-              <Td>Sunday</Td>
-              <Td>20:00</Td>
-              <Td>Debit card payment</Td>
-              <Td isNumeric>150.00</Td>
-            </Tr>
-            <Tr>
-              <Td>January 30, 2022</Td>
-              <Td>Sunday</Td>
-              <Td>20:00</Td>
-              <Td>Debit card payment</Td>
-              <Td isNumeric>150.00</Td>
-            </Tr>
-            <Tr>
-              <Td>January 30, 2022</Td>
-              <Td>Sunday</Td>
-              <Td>20:00</Td>
-              <Td>Debit card payment</Td>
-              <Td isNumeric>150.00</Td>
-            </Tr>
+            {mockedTableData.map((data) => {
+              return (
+                <Tr key={data.id}>
+                  <Td>{data.date}</Td>
+                  <Td>{data.date}</Td>
+                  <Td>{data.description}</Td>
+                  <Td isNumeric>{data.value}</Td>
+                </Tr>
+              )
+            })}
           </Tbody>
         </Table>
       </Flex>
