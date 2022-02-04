@@ -138,6 +138,8 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
-    ]
+    ],
+    'DEFAULT_PAGINATION_CLASS': 'transactions.pagination.CustomPagination',
+    'PAGE_SIZE': 10,
 }
 AUTH_USER_MODEL = 'transactions.Person'

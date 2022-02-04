@@ -2,6 +2,10 @@ import { Transaction } from "./transactions";
 
 
 export interface TransactionsTableData {
-  data: Transaction[];
+  data: {
+    count: number;
+    page: number;
+    results : Transaction[];
+  };
   loading: boolean;
 };

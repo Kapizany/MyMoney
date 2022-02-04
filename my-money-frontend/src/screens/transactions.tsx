@@ -1,19 +1,13 @@
 import {
   Flex,
   Heading,
-  Table,
-  Tbody,
-  Td,
-  Th,
-  Thead,
-  Tr,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { transactionsAPI } from "../api/transactions";
 import { BackgroundScreen } from "../components/BackgroundScreen";
-import { GetWeekdayFromDate } from "../components/GetWeekdayFromDate";
 import { Header } from "../components/Header";
 import { SideBarMenu } from "../components/SideBarMenu";
+import { TransactionsTable } from "../components/TransactionsTable";
 import { SelectedPageProps } from "../interfaces/selectedPage";
 import { TransactionsTableData } from "../interfaces/transactionsTableData";
 
@@ -24,7 +18,11 @@ export function Transactions({
   setSelectedPage("transactions");
 
   const [tableData, setTableData] = useState<TransactionsTableData>({
-    data: [],
+    data: {
+      results: [],
+      page: 0,
+      count: 0,
+    },
     loading: true,
   });
 
@@ -67,34 +65,7 @@ export function Transactions({
           </Heading>
         </Flex>
 
-        <Table
-          w="83vw%"
-          mx="1rem"
-          bg="gray.50"
-          boxShadow="0px 0px 8px 0px rgba(0,0,0,0.4)"
-          color="dollar.900"
-        >
-          <Thead>
-            <Tr>
-              <Th>Data</Th>
-              <Th>Day</Th>
-              <Th>Description</Th>
-              <Th isNumeric>Value (USD)</Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {tableData.data.map((data) => {
-              return (
-                <Tr key={data.id}>
-                  <Td>{data.date}</Td>
-                  <Td>{GetWeekdayFromDate(data.date)}</Td>
-                  <Td>{data.description}</Td>
-                  <Td isNumeric>{data.value}</Td>
-                </Tr>
-              );
-            })}
-          </Tbody>
-        </Table>
+        <TransactionsTable tableData={tableData.data} />        
       </Flex>
     </BackgroundScreen>
   );
