@@ -1,37 +1,51 @@
-import { Flex, Heading, Table, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
+import {
+  Flex,
+  Heading,
+  Table,
+  Tbody,
+  Td,
+  Th,
+  Thead,
+  Tr,
+} from "@chakra-ui/react";
+import { useState } from "react";
+import { transactionsAPI } from "../api/transactions";
 import { BackgroundScreen } from "../components/BackgroundScreen";
+import { GetWeekdayFromDate } from "../components/GetWeekdayFromDate";
 import { Header } from "../components/Header";
 import { SideBarMenu } from "../components/SideBarMenu";
-import { DashboardProps } from "../interfaces/dashboard";
+import { SelectedPageProps } from "../interfaces/selectedPage";
+import { TransactionsTableData } from "../interfaces/transactionsTableData";
 
-export function Transactions({selectedPage, setSelectedPage}: DashboardProps) {
-    setSelectedPage("transactions");
-    const mockedTableData = [
-      {
-        "id": 1,
-        "value": 1,
-        "date": "2022-02-02",
-        "description": "1",
-        "user": "admin@example.com"
-      },
-      {
-        "id": 2,
-        "value": 2,
-        "date": "2022-02-02",
-        "description": "2",
-        "user": "admin@example.com"
-      },
-      {
-        "id": 3,
-        "value": 3,
-        "date": "2022-02-02",
-        "description": "3",
-        "user": "admin@example.com"
-      },
-    ]
-    return  <BackgroundScreen alignItems="normal" justifyContent="flex-start">
+export function Transactions({
+  selectedPage,
+  setSelectedPage,
+}: SelectedPageProps) {
+  setSelectedPage("transactions");
+
+  const [tableData, setTableData] = useState<TransactionsTableData>({
+    data: [],
+    loading: true,
+  });
+
+  const tokenLocalStorage = localStorage.getItem("mymoney_token");
+
+  transactionsAPI
+    .getTransactionsList(tokenLocalStorage ? tokenLocalStorage : "")
+    .then((response) => {
+      if (tableData.loading) {
+        setTableData({
+          data: response.data,
+          loading: false,
+        });
+      }
+    })
+    .catch((error) => console.log(error));
+
+  return (
+    <BackgroundScreen alignItems="normal" justifyContent="flex-start">
       <Header />
-      <SideBarMenu selectedPage={selectedPage}/>
+      <SideBarMenu selectedPage={selectedPage} />
       <Flex
         w="83vw"
         mt="6vh"
@@ -48,7 +62,9 @@ export function Transactions({selectedPage, setSelectedPage}: DashboardProps) {
           bg="gray.50"
           boxShadow="0px 0px 8px 0px rgba(0,0,0,0.4)"
         >
-          <Heading size="md" color='dollar.900'>Transactions</Heading>
+          <Heading size="md" color="dollar.900">
+            Transactions
+          </Heading>
         </Flex>
 
         <Table
@@ -56,7 +72,7 @@ export function Transactions({selectedPage, setSelectedPage}: DashboardProps) {
           mx="1rem"
           bg="gray.50"
           boxShadow="0px 0px 8px 0px rgba(0,0,0,0.4)"
-          color='dollar.900'
+          color="dollar.900"
         >
           <Thead>
             <Tr>
@@ -67,18 +83,19 @@ export function Transactions({selectedPage, setSelectedPage}: DashboardProps) {
             </Tr>
           </Thead>
           <Tbody>
-            {mockedTableData.map((data) => {
+            {tableData.data.map((data) => {
               return (
                 <Tr key={data.id}>
                   <Td>{data.date}</Td>
-                  <Td>{data.date}</Td>
+                  <Td>{GetWeekdayFromDate(data.date)}</Td>
                   <Td>{data.description}</Td>
                   <Td isNumeric>{data.value}</Td>
                 </Tr>
-              )
+              );
             })}
           </Tbody>
         </Table>
       </Flex>
     </BackgroundScreen>
+  );
 }

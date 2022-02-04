@@ -7,7 +7,7 @@ from .models import Person, Transaction
 
 class PersonViewSet(viewsets.ModelViewSet):
     """
-    API endpoint that allows users to be viewed or edited.
+    API endpoint that allows people to be viewed or edited.
     """
     queryset = Person.objects.all()
     serializer_class = PersonSerializer
@@ -22,7 +22,7 @@ class PersonViewSet(viewsets.ModelViewSet):
 
 class TransactionViewSet(viewsets.ModelViewSet):
     """
-    API endpoint that allows users to be viewed or edited.
+    API endpoint that allows transactions to be viewed or edited.
     """
     queryset = Transaction.objects.all()
     serializer_class = TransactionSerializer

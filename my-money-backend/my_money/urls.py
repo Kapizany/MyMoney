@@ -20,7 +20,7 @@ from rest_framework import routers
 from transactions.views import PersonViewSet, TransactionViewSet
 
 router = routers.DefaultRouter()
-router.register(r'users', PersonViewSet)
+router.register(r'people', PersonViewSet)
 router.register(r'transactions', TransactionViewSet)
 
 urlpatterns = [
