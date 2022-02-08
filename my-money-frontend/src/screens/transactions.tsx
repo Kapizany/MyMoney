@@ -1,5 +1,4 @@
 import {
-  Button,
   Flex,
   Heading,
 } from "@chakra-ui/react";
@@ -7,23 +6,27 @@ import { useState } from "react";
 import { transactionsAPI } from "../api/transactions";
 import { BackgroundScreen } from "../components/BackgroundScreen";
 import { Header } from "../components/Header";
+import { Pagination } from "../components/Pagination";
 import { SideBarMenu } from "../components/SideBarMenu";
 import { TransactionsTable } from "../components/TransactionsTable";
 import { SelectedPageProps } from "../interfaces/selectedPage";
 import { TransactionsTableData } from "../interfaces/transactionsTableData";
 
 
-export function Transactions({
-  selectedPage,
-  setSelectedPage,
-}: SelectedPageProps) {
+export function Transactions({selectedPage, setSelectedPage,}: SelectedPageProps) {
   setSelectedPage("transactions");
+
+  const [pageSize, setPageSize] = useState(10)
+
+  function updatePageSize(size: number) {
+    setPageSize(size);
+  }
 
   const [tableData, setTableData] = useState<TransactionsTableData>({
     data: {
-      results: [],
-      page: 1,
       count: 0,
+      page: 1,
+      results: [],
     },
     loading: true,
   });
@@ -32,7 +35,10 @@ export function Transactions({
 
   function updateTableData() {
     transactionsAPI
-    .getTransactionsList(tokenLocalStorage ? tokenLocalStorage : "", tableData.data.page)
+    .getTransactionsList(
+        tokenLocalStorage ? tokenLocalStorage : "",
+        tableData.data.page,
+        pageSize)
     .then((response) => {
       if (tableData.loading) {
         setTableData({
@@ -42,18 +48,37 @@ export function Transactions({
       }
       })
       .catch((error) => console.log(error));
-    }
+  }
 
-    updateTableData();
+  updateTableData();
 
-    const lastPage: number = Math.ceil(tableData.data.count / 10);
+  const lastPage: number = Math.ceil(tableData.data.count / pageSize);
 
-    return (
+  function setFirstPage() {
+    tableData.data.page = 1;
+  }
+
+  function decreasePageByOne() {
+    tableData.data.page = tableData.data.page - 1;
+  }
+
+  function increasePageByOne() {
+    tableData.data.page = tableData.data.page + 1;
+  }
+
+  function setLastPage() {
+    tableData.data.page = lastPage;
+  }
+
+  function setLoadingToTrue() {
+    tableData.loading = true;
+  }
+
+  return (
     <BackgroundScreen alignItems="normal" justifyContent="flex-start">
       <Header />
       <SideBarMenu selectedPage={selectedPage} />
       <Flex
-        overflowX="hidden"
         w="83vw"
         mt="6vh"
         ml="17vw"
@@ -64,7 +89,8 @@ export function Transactions({
           w="83vw%"
           h="3rem"
           flexShrink="0"
-          m="1rem"
+          mt="1rem"
+          mx="1rem"
           px="1rem"
           alignItems="center"
           bgColor="gray.50"
@@ -73,96 +99,34 @@ export function Transactions({
           <Heading size="md" color="dollar.900">Transactions</Heading>
         </Flex>
 
-        <TransactionsTable tableData={tableData.data} />
+        <Pagination
+          pageSize={pageSize}
+          setPageSize={updatePageSize}
+          setFirstPage={setFirstPage}
+          decreasePageByOne={decreasePageByOne}
+          currentPage={tableData.data.page}
+          lastPage={lastPage}
+          increasePageByOne={increasePageByOne}
+          setLastPage={setLastPage}
+          setLoadingToTrue={setLoadingToTrue}
+          updateData={updateTableData}
+        />
 
-        <Flex m="1rem" justifyContent="center" alignItems="center">
-          <Button
-            size="sm"
-            mr="0.5rem"
-            px="-0.5rem"
-            bg="gray.50"
-            bgColor="gray.50"
-            boxShadow="0px 0px 8px 0px rgba(0,0,0,0.4)"
-            color="dollar.900"
-            onClick={() => {
-              if (tableData.data.page !== 1) {
-                tableData.data.page = 1;
-                tableData.loading = true;
-                updateTableData();
-              }
-            }}
-            // can hurt accessibility:
-            // _focus={{
-            //   outline: 0,
-            // }}
-          >
-            {'<<'}
-          </Button>
-          <Button
-            size="sm"
-            bg="gray.50"
-            bgColor="gray.50"
-            boxShadow="0px 0px 8px 0px rgba(0,0,0,0.4)"
-            color="dollar.900"
-            onClick={() => {
-              if (tableData.data.page > 1) {
-                tableData.data.page = tableData.data.page - 1;
-                tableData.loading = true;
-                updateTableData();
-              }
-            }}
-          >
-            {'<'}
-          </Button>
-          <Flex
-            h="2rem"
-            mx="0.5rem"
-            px="0.5rem"
-            alignItems="center"
-            bg="gray.50"
-            bgColor="gray.50"
-            borderRadius="md"
-            boxShadow="0px 0px 8px 0px rgba(0,0,0,0.4)"
-            color="dollar.900"
-          >
-            Page {tableData.data.page}/{lastPage}
-          </Flex>
-          <Button
-            size="sm"
-            bg="gray.50"
-            bgColor="gray.50"
-            boxShadow="0px 0px 8px 0px rgba(0,0,0,0.4)"
-            color="dollar.900"
-            onClick={() => {
-              if (tableData.data.page < lastPage) {
-                tableData.data.page = tableData.data.page + 1;
-                tableData.loading = true;
-                updateTableData();
-              }
-            }}
-          >
-            {'>'}
-          </Button>
-          <Button
-            size="sm"
-            ml="0.5rem"
-            px="-0.5rem"
-            bg="gray.50"
-            bgColor="gray.50"
-            boxShadow="0px 0px 8px 0px rgba(0,0,0,0.4)"
-            color="dollar.900"
-            onClick={() => {
-              if (tableData.data.page !== lastPage) {
-                tableData.data.page = lastPage;
-                tableData.loading = true;
-                updateTableData();
-              }
-            }}
-          >
-            {'>>'}
-          </Button>
-        </Flex>
+        <TransactionsTable data={tableData.data} />
+
+        <Pagination
+          pageSize={pageSize}
+          setPageSize={updatePageSize}
+          setFirstPage={setFirstPage}
+          decreasePageByOne={decreasePageByOne}
+          currentPage={tableData.data.page}
+          lastPage={lastPage}
+          increasePageByOne={increasePageByOne}
+          setLastPage={setLastPage}
+          setLoadingToTrue={setLoadingToTrue}
+          updateData={updateTableData}
+        />
       </Flex>
     </BackgroundScreen>
   );
-}
+};

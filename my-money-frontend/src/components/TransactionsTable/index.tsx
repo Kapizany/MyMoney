@@ -3,12 +3,12 @@ import { GetWeekdayFromDate } from "../GetWeekdayFromDate";
 import { TransactionsTableProps } from "../../interfaces/transactionTable"
 
 
-export const TransactionsTable:React.FC<TransactionsTableProps> = ({tableData}) => {
+export const TransactionsTable:React.FC<TransactionsTableProps> = ({data}) => {
   return (
     <Table
       w="83vw%"
       mx="1rem"
-      bg="gray.50"
+      bgColor="gray.50"
       boxShadow="0px 0px 8px 0px rgba(0,0,0,0.4)"
       color="dollar.900"
     >
@@ -21,13 +21,13 @@ export const TransactionsTable:React.FC<TransactionsTableProps> = ({tableData}) 
         </Tr>
       </Thead>
       <Tbody>
-        {tableData.results.map((data) => {
+        {data.results.map((transaction) => {
           return (
-            <Tr key={data.id}>
-              <Td>{data.date}</Td>
-              <Td>{GetWeekdayFromDate(data.date)}</Td>
-              <Td>{data.description}</Td>
-              <Td isNumeric>{data.value}</Td>
+            <Tr key={transaction.id}>
+              <Td>{transaction.date}</Td>
+              <Td>{GetWeekdayFromDate(transaction.date)}</Td>
+              <Td>{transaction.description}</Td>
+              <Td isNumeric>{transaction.value}</Td>
             </Tr>
           );
         })}

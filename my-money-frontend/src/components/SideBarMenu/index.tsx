@@ -7,8 +7,10 @@ export const SideBarMenu: React.FC<{selectedPage: string}> = ({selectedPage}) =>
   const hoverStyle = {
     bgColor: "dollar.400",
     cursor: "pointer",
-  }
+  };
+
   const history = useNavigate();
+
   return (
     <Flex
       position="fixed"
@@ -25,28 +27,31 @@ export const SideBarMenu: React.FC<{selectedPage: string}> = ({selectedPage}) =>
       </Flex>
       <Flex w="100%" flexDirection="column" spacing="0">
         <Flex
-          bgColor={getSideBarMenuItemColor(selectedPage, "dashboard")}
-          _hover={hoverStyle} py="0.3rem"
-          onClick={() => history("/dashboard")}
+          py="0.3rem"
           alignItems="center"
+          bgColor={getSideBarMenuItemColor(selectedPage, "dashboard")}
+          _hover={hoverStyle}
+          onClick={() => history("/dashboard")}
         >
           <Icon as={FaChartPie} ml="1rem" mr="0.5rem"/>
           Dashboard
         </Flex>
         <Flex
-          bgColor={getSideBarMenuItemColor(selectedPage, "statement")}
-          _hover={hoverStyle} py="0.3rem"
+          py="0.3rem"
           alignItems="center"
+          bgColor={getSideBarMenuItemColor(selectedPage, "statement")}
+          _hover={hoverStyle}
         >
           <Icon as={FaThList} ml="1rem" mr="0.5rem"/>
           Statement
         </Flex>
         <LinkBox>
           <Flex
-            bgColor={getSideBarMenuItemColor(selectedPage, "transactions")}
-            _hover={hoverStyle} py="0.3rem"
-            onClick={() => history("/transactions")}
+            py="0.3rem"
             alignItems="center"
+            bgColor={getSideBarMenuItemColor(selectedPage, "transactions")}
+            _hover={hoverStyle}
+            onClick={() => history("/transactions")}
           >
             <Icon as={FaStream} ml="1rem" mr="0.5rem"/>
             Transactions
