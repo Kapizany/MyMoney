@@ -5,5 +5,5 @@ export const loginAPI = {
         async (data:{username:string; password:string;}) => await api.post("api-token-auth/", data),
 
     validateToken:
-        async (token: string) => await api.get("users/get_auth/", {headers: { Authorization: `Token ${token}`}}),
+        async (token: string) => await api.get("people/get_auth/", {headers: { Authorization: `Token ${token}`}}),
 };

@@ -1,10 +1,10 @@
 import { BackgroundScreen } from "../components/BackgroundScreen";
 import { Header } from "../components/Header";
 import { SideBarMenu } from "../components/SideBarMenu";
-import { DashboardProps } from "../interfaces/dashboard";
+import { SelectedPageProps } from "../interfaces/selectedPage";
 
 
-export function Dashboard({selectedPage, setSelectedPage}: DashboardProps) {
+export function Dashboard({selectedPage, setSelectedPage}: SelectedPageProps) {
     setSelectedPage("dashboard");
     return  <BackgroundScreen alignItems="normal" justifyContent="flex-start">
       <Header />

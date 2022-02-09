@@ -26,7 +26,7 @@ export function Login() {
     history("/dashboard");
   }
 
-  return <BackgroundScreen>
+  return <BackgroundScreen bg="gray.900">
     <Flex
       as="form"
       width="100%"

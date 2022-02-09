@@ -1,3 +1,4 @@
+import email
 from rest_framework import viewsets
 from .serializers import PersonSerializer, TransactionSerializer
 from rest_framework.decorators import action
@@ -7,10 +8,13 @@ from .models import Person, Transaction
 
 class PersonViewSet(viewsets.ModelViewSet):
     """
-    API endpoint that allows users to be viewed or edited.
+    API endpoint that allows people to be viewed or edited.
     """
-    queryset = Person.objects.all()
     serializer_class = PersonSerializer
+    def get_queryset(self):
+        if self.request.user.is_superuser:
+            return Person.objects.all()
+        return Person.objects.filter(email=self.request.user.email).all()
 
     @action(detail=False, methods=['get'], name="Get Authorization")
     def get_auth(self, format=None):
@@ -22,7 +26,10 @@ class PersonViewSet(viewsets.ModelViewSet):
 
 class TransactionViewSet(viewsets.ModelViewSet):
     """
-    API endpoint that allows users to be viewed or edited.
+    API endpoint that allows transactions to be viewed or edited.
     """
-    queryset = Transaction.objects.all()
     serializer_class = TransactionSerializer
+    def get_queryset(self):
+        if self.request.user.is_superuser:
+            return Transaction.objects.all()
+        return Transaction.objects.filter(user=self.request.user).all()

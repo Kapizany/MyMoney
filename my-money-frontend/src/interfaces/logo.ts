@@ -4,4 +4,4 @@ export interface LogoProps {
   logoMSize?:string;
   logoTextSize?:string;
   logoTextColor?: string;
-}
+};
