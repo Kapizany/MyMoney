@@ -1,11 +1,23 @@
-import { Button, Flex, IconButton, Table, Tbody, Td, Th, Thead, Tooltip, Tr } from "@chakra-ui/react";
-import { DeleteIcon, EditIcon } from "@chakra-ui/icons";
+import {
+  Button,
+  Flex,
+  IconButton,
+  Table,
+  Tbody,
+  Td,
+  Th,
+  Thead,
+  Tooltip,
+  Tr
+} from "@chakra-ui/react";
+import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import { TransactionsTableProps } from "../../interfaces/transactionTable";
-import { getWeekdayFromDate } from "../../utils/getWeekdayFromData";
 import { theme } from "../../styles/theme";
+import { getWeekdayFromDate } from "../../utils/getWeekdayFromData";
 
 
-export const TransactionsTable:React.FC<TransactionsTableProps> = ({data, deleteTransaction}) => {
+export const TransactionsTable:React.FC<TransactionsTableProps> = ({
+    data, deleteTransaction}) => {
   return (
     <Table
       w="83vw%"
@@ -27,9 +39,6 @@ export const TransactionsTable:React.FC<TransactionsTableProps> = ({data, delete
               boxShadow="0px 0px 8px 0px rgba(0,0,0,0.4)"
               color="dollar.900"
               _focus={theme.styles.buttonFocusStyle}
-              // onClick={() => {
-              //
-              // }}
              >
               Add transaction
             </Button>
@@ -54,10 +63,11 @@ export const TransactionsTable:React.FC<TransactionsTableProps> = ({data, delete
                     <IconButton
                       aria-label='Edit transaction'
                       bgColor="dollar.500"
+                      color="gray.50"
                       mr="0.5rem"
                       _hover={{bgColor: "dollar.400",}}
                       _focus={theme.styles.buttonFocusStyle}
-                      icon={<EditIcon color="gray.50" />}
+                      icon={<AiFillEdit color="gray.50" />}
                     />
                   </Tooltip>
                   <Tooltip
@@ -68,12 +78,13 @@ export const TransactionsTable:React.FC<TransactionsTableProps> = ({data, delete
                     <IconButton
                       aria-label='Delete transaction'
                       bgColor="red"
+                      color="gray.50"
                       _hover={{bgColor: "black",}}
                       _focus={{
                         outlineOffset: "0px",
                         outlineColor: "red",
                       }}
-                      icon={<DeleteIcon color="gray.50" />}
+                      icon={<AiFillDelete />}
                       onClick={() => {
                         deleteTransaction(transaction.id);
                       }}

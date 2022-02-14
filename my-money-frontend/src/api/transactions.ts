@@ -8,5 +8,5 @@ export const transactionsAPI = {
 
   deleteTransaction:
     async (token: string, id: number) => await api.delete(
-      `transactions/${id}`, {headers: {Authorization: `Token ${token}`}}),
+      `transactions/${id}/`, {headers: {Authorization: `Token ${token}`}}),
 };
