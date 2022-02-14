@@ -1,5 +1,6 @@
 import { extendTheme } from '@chakra-ui/react';
 
+
 export const theme = extendTheme({
     colors: {
         gray: {
@@ -25,7 +26,7 @@ export const theme = extendTheme({
             "200": "#78e49c",
             "100": "#98FB98",
             "50": "#befdbe"
-        }
+        },
     },
     fonts: {
         heading: "Roboto",
@@ -36,7 +37,11 @@ export const theme = extendTheme({
             body: {
                 bg: 'gray.100',
                 color:'gray.50'
-            }
-        }
-    }
+            },
+        },
+        buttonFocusStyle: {
+          outlineOffset: "0px",
+          outlineColor: "dollar.500",
+        },
+    },
 });

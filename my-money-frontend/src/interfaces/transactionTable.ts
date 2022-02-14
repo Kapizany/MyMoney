@@ -7,4 +7,5 @@ export interface TransactionsTableProps {
     page: number;
     results: Transaction[];
   };
+  deleteTransaction: Function;
 }

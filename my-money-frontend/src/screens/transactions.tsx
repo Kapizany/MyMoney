@@ -74,6 +74,20 @@ export function Transactions({selectedPage, setSelectedPage,}: SelectedPageProps
     tableData.loading = true;
   }
 
+  function deleteTransaction(id: number) {
+    console.log("entered deleteTransaction function with id: ", id);
+    transactionsAPI.deleteTransaction(
+      tokenLocalStorage ? tokenLocalStorage : "",
+      id,
+    )
+    .then(() => {
+      console.log(".then passes without error")
+      setLoadingToTrue();
+      updateTableData()
+    })
+    .catch((error) => console.log(error));
+  }
+
   return (
     <BackgroundScreen alignItems="normal" justifyContent="flex-start">
       <Header />
@@ -112,7 +126,10 @@ export function Transactions({selectedPage, setSelectedPage,}: SelectedPageProps
           updateData={updateTableData}
         />
 
-        <TransactionsTable data={tableData.data} />
+        <TransactionsTable
+          data={tableData.data}
+          deleteTransaction={deleteTransaction}
+        />
 
         <Pagination
           pageSize={pageSize}

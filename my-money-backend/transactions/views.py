@@ -1,4 +1,3 @@
-import email
 from rest_framework import viewsets
 from .serializers import PersonSerializer, TransactionSerializer
 from rest_framework.decorators import action
