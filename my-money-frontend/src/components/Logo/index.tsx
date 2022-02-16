@@ -4,8 +4,8 @@ import { LogoProps } from "../../interfaces/logo";
 
 
 export const Logo:React.FC<LogoProps> = (props) => {
-  const logoAlign = props.stack == "horizontal" ? "row" : "column";
-  const paddingY = props.stack == "horizontal" ? "5%" : undefined;
+  const logoAlign = props.stack === "horizontal" ? "row" : "column";
+  const paddingY = props.stack === "horizontal" ? "5%" : undefined;
 
   return <Stack alignItems="center" color="dollar.500" direction={[logoAlign]}>
     <Icon boxSize={props.logoImageSize? props.logoImageSize : "3.5rem"} as={FaDollarSign} />

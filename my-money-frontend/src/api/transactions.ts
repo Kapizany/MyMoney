@@ -5,4 +5,12 @@ export const transactionsAPI = {
   getTransactionsList:
     async (token: string, page = 1, page_size = 10) => await api.get(
       `transactions/?page=${page}&page_size=${page_size}`, {headers: {Authorization: `Token ${token}`}}),
+
+  createTransaction:
+    async (token: string, transactionData: {date: string; description: string; value: number;}) => await api.post(
+      `transactions/`, transactionData, {headers: {Authorization: `Token ${token}`}}),
+
+  deleteTransaction:
+    async (token: string, id: number) => await api.delete(
+      `transactions/${id}/`, {headers: {Authorization: `Token ${token}`}}),
 };

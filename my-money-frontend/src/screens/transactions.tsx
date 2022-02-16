@@ -13,10 +13,11 @@ import { SelectedPageProps } from "../interfaces/selectedPage";
 import { TransactionsTableData } from "../interfaces/transactionsTableData";
 
 
-export function Transactions({selectedPage, setSelectedPage,}: SelectedPageProps) {
+export function Transactions(
+    {selectedPage, setSelectedPage,}: SelectedPageProps) {
   setSelectedPage("transactions");
 
-  const [pageSize, setPageSize] = useState(10)
+  const [pageSize, setPageSize] = useState(10);
 
   function updatePageSize(size: number) {
     setPageSize(size);
@@ -74,6 +75,19 @@ export function Transactions({selectedPage, setSelectedPage,}: SelectedPageProps
     tableData.loading = true;
   }
 
+  function deleteTransaction(id: number) {
+    transactionsAPI.deleteTransaction(
+      tokenLocalStorage ? tokenLocalStorage : "",
+      id,
+    )
+    .then(() => {
+      setFirstPage();
+      setLoadingToTrue();
+      updateTableData();
+    })
+    .catch((error) => console.log(error));
+  }
+
   return (
     <BackgroundScreen alignItems="normal" justifyContent="flex-start">
       <Header />
@@ -112,7 +126,10 @@ export function Transactions({selectedPage, setSelectedPage,}: SelectedPageProps
           updateData={updateTableData}
         />
 
-        <TransactionsTable data={tableData.data} />
+        <TransactionsTable
+          data={tableData.data}
+          deleteTransaction={deleteTransaction}
+        />
 
         <Pagination
           pageSize={pageSize}

@@ -1,6 +1,7 @@
 import { Button, Flex, Icon, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
 import { FaAngleDown } from "react-icons/fa";
 import { PaginationProps } from "../../interfaces/pagination";
+import { theme } from "../../styles/theme";
 
 
 export const Pagination:React.FC<PaginationProps> = (
@@ -16,13 +17,8 @@ export const Pagination:React.FC<PaginationProps> = (
       setLoadingToTrue,
       updateData,
     }) => {
-  const focusStyle = {
-    outlineOffset: "0px",
-    outlineColor: "dollar.500",
-  };
-
   return (
-    <Flex m="1rem" justifyContent="center">
+    <Flex m="1rem" pb="1rem" justifyContent="center">
       <Button
         size="sm"
         mr="0.5rem"
@@ -30,7 +26,7 @@ export const Pagination:React.FC<PaginationProps> = (
         bgColor="gray.50"
         boxShadow="0px 0px 8px 0px rgba(0,0,0,0.4)"
         color="dollar.900"
-        _focus={focusStyle}
+        _focus={theme.styles.buttonFocusStyle}
         onClick={() => {
           if (currentPage !== 1) {
             setFirstPage();
@@ -46,7 +42,7 @@ export const Pagination:React.FC<PaginationProps> = (
         bgColor="gray.50"
         boxShadow="0px 0px 8px 0px rgba(0,0,0,0.4)"
         color="dollar.900"
-        _focus={focusStyle}
+        _focus={theme.styles.buttonFocusStyle}
         onClick={() => {
           if (currentPage > 1) {
             decreasePageByOne();
@@ -74,7 +70,7 @@ export const Pagination:React.FC<PaginationProps> = (
         bgColor="gray.50"
         boxShadow="0px 0px 8px 0px rgba(0,0,0,0.4)"
         color="dollar.900"
-        _focus={focusStyle}
+        _focus={theme.styles.buttonFocusStyle}
         onClick={() => {
           if (currentPage < lastPage) {
             increasePageByOne();
@@ -92,7 +88,7 @@ export const Pagination:React.FC<PaginationProps> = (
         bgColor="gray.50"
         boxShadow="0px 0px 8px 0px rgba(0,0,0,0.4)"
         color="dollar.900"
-        _focus={focusStyle}
+        _focus={theme.styles.buttonFocusStyle}
         onClick={() => {
           if (currentPage !== lastPage) {
             setLastPage();
