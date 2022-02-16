@@ -3,15 +3,18 @@ import { BackgroundScreenProps } from "../interfaces/backgroundScreen";
 import { theme } from "../styles/theme";
 
 
-export const BackgroundScreen:React.FC<BackgroundScreenProps> = ({children, alignItems, justifyContent}) => {
-    return <ChakraProvider theme={theme}>
+export const BackgroundScreen:React.FC<BackgroundScreenProps> = (
+    {children, alignItems, justifyContent, bg}) => {
+  return (
+    <ChakraProvider theme={theme}>
       <Flex
-        w="100vw"
         h="100vh"
         alignItems={alignItems ? alignItems : "center"}
         justifyContent={justifyContent ? justifyContent : "center"}
+        bg={bg}
       >
         {children}
       </Flex>
     </ChakraProvider>
+  );
 };

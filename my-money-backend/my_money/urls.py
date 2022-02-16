@@ -20,8 +20,8 @@ from rest_framework import routers
 from transactions.views import PersonViewSet, TransactionViewSet
 
 router = routers.DefaultRouter()
-router.register(r'users', PersonViewSet)
-router.register(r'transactions', TransactionViewSet)
+router.register(r'people', PersonViewSet, basename='People')
+router.register(r'transactions', TransactionViewSet, basename='Transaction')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
