@@ -17,7 +17,7 @@ export function Transactions(
     {selectedPage, setSelectedPage,}: SelectedPageProps) {
   setSelectedPage("transactions");
 
-  const [pageSize, setPageSize] = useState(10)
+  const [pageSize, setPageSize] = useState(10);
 
   function updatePageSize(size: number) {
     setPageSize(size);

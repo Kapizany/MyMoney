@@ -18,7 +18,7 @@ export const Pagination:React.FC<PaginationProps> = (
       updateData,
     }) => {
   return (
-    <Flex m="1rem" justifyContent="center">
+    <Flex m="1rem" pb="1rem" justifyContent="center">
       <Button
         size="sm"
         mr="0.5rem"

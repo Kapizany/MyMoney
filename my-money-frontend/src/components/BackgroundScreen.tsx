@@ -8,6 +8,7 @@ export const BackgroundScreen:React.FC<BackgroundScreenProps> = (
   return (
     <ChakraProvider theme={theme}>
       <Flex
+        h="100vh"
         alignItems={alignItems ? alignItems : "center"}
         justifyContent={justifyContent ? justifyContent : "center"}
         bg={bg}
