@@ -1,0 +1,12 @@
+.apexcharts-menu {
+  background-color: #ffffff!important;
+  color: #000000!important;
+}
+
+.apexcharts-menu-item:hover {
+  background-color: #40ca6e!important; /* dollar.500 */
+}
+
+.apexcharts-tooltip {
+  color: #043927!important; /* dollar.900 */;
+}

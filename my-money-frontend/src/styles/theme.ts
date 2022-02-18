@@ -13,19 +13,19 @@ export const theme = extendTheme({
             "300": "#9699b0",
             "200": "#b3b5c6",
             "100": "#d1d2dc",
-            "50": "#eeeef2"
+            "50": "#eeeef2",
         },
         dollar: {
             "900": "#043927",
-            "800": "#2E8B57",
-            "700": "#01796F",
-            "600": "#00A572",
+            "800": "#2e8b57",
+            "700": "#01796f",
+            "600": "#00a572",
             "500": "#40ca6e",
             "400": "#4af784",
             "300": "#6aefba",
             "200": "#78e49c",
-            "100": "#98FB98",
-            "50": "#befdbe"
+            "100": "#98fb98",
+            "50": "#befdbe",
         },
     },
     fonts: {
@@ -35,8 +35,8 @@ export const theme = extendTheme({
     styles: {
         global: {
             body: {
-                bg: 'gray.100',
-                color:'gray.50'
+                bg: "gray.100",
+                color:"gray.50",
             },
         },
         buttonFocusStyle: {
