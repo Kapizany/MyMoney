@@ -1,5 +1,5 @@
 export interface LogoProps {
-  stack?: "vertical"|"horizontal";
+  stack?: "vertical" | "horizontal";
   logoImageSize?:string;
   logoMSize?:string;
   logoTextSize?:string;

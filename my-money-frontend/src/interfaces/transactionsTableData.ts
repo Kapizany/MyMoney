@@ -1,4 +1,4 @@
-import { Transaction } from "./transactions";
+import { Transaction } from "./transaction";
 
 
 export interface TransactionsTableData {

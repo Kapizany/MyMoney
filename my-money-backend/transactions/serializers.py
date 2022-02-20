@@ -13,7 +13,7 @@ class TransactionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Transaction
         fields = ['id', 'value', 'date', 'description', 'user']
-    
+
     def create(self, validated_data):
         data = validated_data.copy()
         data['user'] = self.context['request'].user

@@ -2,6 +2,7 @@ import {
   Flex,
   Heading,
 } from "@chakra-ui/react";
+import { table } from "console";
 import { useState } from "react";
 import { transactionsAPI } from "../api/transactions";
 import { BackgroundScreen } from "../components/BackgroundScreen";
@@ -14,14 +15,10 @@ import { TransactionsTableData } from "../interfaces/transactionsTableData";
 
 
 export function Transactions(
-    {selectedPage, setSelectedPage,}: SelectedPageProps) {
+    {selectedPage, setSelectedPage}: SelectedPageProps) {
   setSelectedPage("transactions");
 
   const [pageSize, setPageSize] = useState(10);
-
-  function updatePageSize(size: number) {
-    setPageSize(size);
-  }
 
   const [tableData, setTableData] = useState<TransactionsTableData>({
     data: {
@@ -34,12 +31,16 @@ export function Transactions(
 
   const tokenLocalStorage = localStorage.getItem("mymoney_token");
 
+  function setLoadingToTrue() {
+    tableData.loading = true;
+  }
+
   function updateTableData() {
     transactionsAPI
     .getTransactionsList(
-        tokenLocalStorage ? tokenLocalStorage : "",
-        tableData.data.page,
-        pageSize)
+      tokenLocalStorage ? tokenLocalStorage : "",
+      tableData.data.page,
+      pageSize)
     .then((response) => {
       if (tableData.loading) {
         setTableData({
@@ -47,8 +48,8 @@ export function Transactions(
           loading: false,
         });
       }
-      })
-      .catch((error) => console.log(error));
+    })
+    .catch((error) => console.log(error));
   }
 
   updateTableData();
@@ -71,17 +72,23 @@ export function Transactions(
     tableData.data.page = lastPage;
   }
 
-  function setLoadingToTrue() {
-    tableData.loading = true;
+  function setLastPageOnNewTransaction() {
+    if (!(tableData.data.count % pageSize)) {
+      setLastPage();
+      increasePageByOne();
+    }
+    else {
+      if (tableData.data.page !== lastPage) setLastPage();
+    }
   }
 
   function deleteTransaction(id: number) {
     transactionsAPI.deleteTransaction(
       tokenLocalStorage ? tokenLocalStorage : "",
-      id,
-    )
+      id)
     .then(() => {
-      setFirstPage();
+      if ((tableData.data.results.length === 1)
+          && (tableData.data.page !== 1)) decreasePageByOne();
       setLoadingToTrue();
       updateTableData();
     })
@@ -100,7 +107,6 @@ export function Transactions(
         flexDirection="column"
       >
         <Flex
-          w="83vw%"
           h="3rem"
           flexShrink="0"
           mt="1rem"
@@ -115,7 +121,7 @@ export function Transactions(
 
         <Pagination
           pageSize={pageSize}
-          setPageSize={updatePageSize}
+          setPageSize={setPageSize}
           setFirstPage={setFirstPage}
           decreasePageByOne={decreasePageByOne}
           currentPage={tableData.data.page}
@@ -129,11 +135,14 @@ export function Transactions(
         <TransactionsTable
           data={tableData.data}
           deleteTransaction={deleteTransaction}
+          setLoadingToTrue={setLoadingToTrue}
+          updateTableData={updateTableData}
+          setLastPageOnNewTransaction={setLastPageOnNewTransaction}
         />
 
         <Pagination
           pageSize={pageSize}
-          setPageSize={updatePageSize}
+          setPageSize={setPageSize}
           setFirstPage={setFirstPage}
           decreasePageByOne={decreasePageByOne}
           currentPage={tableData.data.page}
@@ -146,4 +155,4 @@ export function Transactions(
       </Flex>
     </BackgroundScreen>
   );
-};
+}
