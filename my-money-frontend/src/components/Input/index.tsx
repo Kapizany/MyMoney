@@ -1,13 +1,14 @@
 import { FormControl, Input as ChakraInput } from "@chakra-ui/react";
 import { InputProps } from "../../interfaces/login";
 
-export function Input({ name, label, ...rest }: InputProps) {
+
+export function Input({ name, placeholder, ...rest }: InputProps) {
   return (
     <FormControl>
       <ChakraInput
         name={name}
         id={name}
-        placeholder={label}
+        placeholder={placeholder}
         textColor="dollar.900"
         borderColor="dollar.500"
         focusBorderColor="dollar.500"
