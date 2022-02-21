@@ -62,6 +62,7 @@ export const SideBarMenu: React.FC<{selectedPage: string}> = ({selectedPage}) =>
   )
 }
 
-function getSideBarMenuItemColor(currentPage: string, itemName: string): string | undefined {
+function getSideBarMenuItemColor(currentPage: string,
+    itemName: string): string | undefined {
   return currentPage === itemName ? "dollar.500" : undefined
 }

@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { Button, Link, Flex, Stack} from '@chakra-ui/react'
+import { Button, Link, Flex, Stack} from '@chakra-ui/react';
 import { loginAPI } from '../api/login';
-import { Input } from '../components/Login/Input';
+import { Input } from '../components/Input';
 import { BackgroundScreen } from '../components/BackgroundScreen';
 import { Logo } from '../components/Logo';
 import { useNavigate } from 'react-router';
@@ -10,13 +10,16 @@ import { useNavigate } from 'react-router';
 export function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
   const history = useNavigate();
 
-  function handleInput(event: React.ChangeEvent<HTMLInputElement>, setFunction: (arg: string) => void) {
+  function handleInput(event: React.ChangeEvent<HTMLInputElement>,
+      setFunction: (arg: string) => void) {
     setFunction(event.target.value)
   }
 
-  async function handleSubmit(event: React.MouseEvent<HTMLButtonElement, MouseEvent>){
+  async function handleSubmit(event: React.MouseEvent<HTMLButtonElement,
+      MouseEvent>){
     event.preventDefault();
     const response = await loginAPI.createToken({
       "username":username,
@@ -41,13 +44,13 @@ export function Login() {
         <Input
           name="username"
           type="username"
-          label="Usuário"
+          placeholder="Usuário"
           onChange={(event) => handleInput(event, setUsername)}
         />
         <Input
           name="password"
           type="password"
-          label="Senha"
+          placeholder="Senha"
           onChange={(event) => handleInput(event, setPassword)}
         />
       </Stack>
@@ -55,9 +58,7 @@ export function Login() {
         textAlign="right"
         mt="0.5rem"
         color="dollar.900"
-        _hover={{
-          textDecoration: "none"
-        }}
+        _hover={{textDecoration: "none"}}
       >
         Esqueceu a senha?
       </Link>
@@ -68,9 +69,7 @@ export function Login() {
         color="gray.50"
         bgColor="dollar.500"
         size="lg"
-        _hover={{
-          bgColor: 'dollar.600'
-        }}
+        _hover={{bgColor: 'dollar.600'}}
         onClick={handleSubmit}
       >
         Entrar

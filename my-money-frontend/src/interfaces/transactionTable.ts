@@ -1,4 +1,4 @@
-import { Transaction } from "./transactions";
+import { Transaction } from "./transaction";
 
 
 export interface TransactionsTableProps {
@@ -8,4 +8,7 @@ export interface TransactionsTableProps {
     results: Transaction[];
   };
   deleteTransaction: Function;
-}
+  setLoadingToTrue: Function;
+  updateTableData: Function;
+  setLastPageOnNewTransaction: Function;
+};

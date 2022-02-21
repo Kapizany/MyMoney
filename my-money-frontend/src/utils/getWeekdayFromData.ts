@@ -1,4 +1,4 @@
-export function getWeekdayFromDate(date: string) : string {
+export function getWeekdayFromDate(date: string): string {
   const dateObject = new Date(date);
 
   const weekDayObject: { [char: string]: string } = {
