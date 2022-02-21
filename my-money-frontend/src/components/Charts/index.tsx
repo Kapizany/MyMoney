@@ -1,9 +1,207 @@
+import { Flex } from "@chakra-ui/react";
 import React from "react";
 import Chart, { Props } from "react-apexcharts";
-import "./styles.css"
+import "./styles.css";
 
 
-export class TransactionsAndBalanceChart extends React.Component<{}, Props> {
+export class ExpensesByCategoryChart extends React.Component<{}, Props> {
+  constructor(props: any) {
+    super(props);
+
+    this.state = {
+      series: [44, 55, 13, 43, 22],
+      options: {
+        chart: {
+          id: "expenses-by-category",
+          background: "#eeeef2",
+          toolbar: {
+            show: true,
+            tools: {
+              download: true,
+              selection: false,
+              zoom: false,
+              zoomin: false,
+              zoomout: false,
+              pan: false,
+              reset: false,
+            },
+          },
+        },
+        labels: ["Market", "Transportation", "Housing", "Savings", "Other"],
+        legend: {
+          position: "bottom",
+        },
+        title: {
+          text: "Expenses by Category",
+          align: "center",
+          margin: 30,
+          offsetY: 3,
+          style: {
+            fontSize: "20px",
+            color: "#1f2029",
+          },
+        },
+      },
+    };
+  }
+
+  render() {
+    return (
+      <Chart
+        options={this.state.options}
+        series={this.state.series}
+        type="pie"
+      />
+    );
+  }
+}
+
+export class CurrentDebitAndCreditChart extends React.Component<{}, Props> {
+  constructor(props: any) {
+    super(props);
+
+    this.state = {
+      series: [
+        {
+          name: "Debit",
+          type: "column",
+          data: [30],
+        },
+        {
+          name: "Credit",
+          type: "column",
+          data: [70],
+        },
+      ],
+      options: {
+        chart: {
+          id: "current-debit-and-credit",
+          background: "#eeeef2",
+          toolbar: {
+            tools: {
+              download: true,
+              selection: false,
+              zoom: false,
+              zoomin: false,
+              zoomout: false,
+              pan: false,
+              reset: false,
+            },
+          },
+        },
+        xaxis: {
+          categories: ["Debit", "Credit"],
+          axisTicks: {
+            show: false,
+          },
+          axisBorder: {
+            show: false,
+          },
+          labels: {
+            show: false,
+          },
+          title: {text: "February", style: {color: "#000000"}, offsetY: -5},
+        },
+        yaxis: {
+          min: 0,
+          max: 80, /* max(y values) + 10 */
+          floating: true,
+          axisTicks: {
+            show: false,
+          },
+          axisBorder: {
+            show: false,
+          },
+          labels: {
+            show: false,
+          },
+        },
+        title: {
+          text: "Current Debit and Credit",
+          align: "center",
+          offsetY: 15,
+          style: {
+            fontSize: "20px",
+            color: "#1f2029",
+          },
+        },
+        colors: ["#cc0000", "#043927"],
+        legend: {
+          show: false,
+        },
+        tooltip: {
+          enabled: false,
+        },
+        dataLabels: {
+          enabled: true,
+          formatter: function (val) {
+            return val + "%";
+          },
+          offsetY: -20,
+          offsetX: 0,
+          style: {
+            fontSize: '24px',
+            colors: ["#cc0000", "#043927"],
+          },
+          background: {
+            enabled: false,
+            dropShadow: {
+              enabled: false,
+            },
+          },
+        },
+      },
+    };
+  }
+
+  render() {
+    return (
+      <Flex
+        w="100%"
+        flexDirection="column"
+      >
+        <Chart
+          options={this.state.options}
+          series={this.state.series}
+          height="90%"
+        />
+        <Flex
+          h="10%"
+          alignItems="center"
+          justifyContent="space-evenly"
+          bgColor="#eeeef2"
+        >
+          <Flex flexDirection="column">
+            <Flex justifyContent="center" color="#cc0000" fontWeight="bold">
+              300.00
+            </Flex>
+            <Flex justifyContent="center" color="#000000">
+              Debit
+            </Flex>
+          </Flex>
+          <Flex flexDirection="column">
+            <Flex justifyContent="center" color="#043927" fontWeight="bold">
+              700.00
+            </Flex>
+            <Flex justifyContent="center" color="#000000">
+              Credit
+            </Flex>
+          </Flex>
+          <Flex flexDirection="column">
+            <Flex justifyContent="center" color="#ff4d00" fontWeight="bold">
+              1,200.00
+            </Flex>
+            <Flex justifyContent="center" color="#000000">
+              Cumulative Balance
+            </Flex>
+          </Flex>
+        </Flex>
+      </Flex>
+    );
+  }
+}
+
+export class DebitAndCreditChart extends React.Component<{}, Props> {
   constructor(props: any) {
     super(props);
 
@@ -27,7 +225,7 @@ export class TransactionsAndBalanceChart extends React.Component<{}, Props> {
       ],
       options: {
         chart: {
-          id: "transactions-and-monthly-balance",
+          id: "debit-and-credit",
           background: "#eeeef2",
           stacked: true,
         },
@@ -36,7 +234,7 @@ export class TransactionsAndBalanceChart extends React.Component<{}, Props> {
             "July", "August", "September", "October", "November", "December"],
           tickPlacement: "between",
           labels: {style: {colors: "#000000"}},
-          title: {text: "Month", style: {color: "#000000"}},
+          title: {text: "Month", style: {color: "#000000",}, offsetY: -5},
         },
         yaxis: {
           min: -600, /* min(y values) - 100 */
@@ -44,7 +242,7 @@ export class TransactionsAndBalanceChart extends React.Component<{}, Props> {
           labels: {style: {colors: "#000000"}},
           title: {text: "Value (USD)", style: {color: "#000000"}},
         },
-        colors: ["#cc0000", "#043927", "#d4af37", "#0000ff"],
+        colors: ["#cc0000", "#043927", "#d4af37"],
         dataLabels: {
           enabled: true,
           enabledOnSeries: [2],
@@ -55,7 +253,7 @@ export class TransactionsAndBalanceChart extends React.Component<{}, Props> {
           },
         },
         title: {
-          text: "Transactions and Monthly Balance",
+          text: "Debit and Credit",
           align: "center",
           offsetY: 15,
           style: {
@@ -101,7 +299,7 @@ export class CumulativeBalanceChart extends React.Component<{}, Props> {
             "July", "August", "September", "October", "November", "December"],
           tickPlacement: "between",
           labels: {style: {colors: "#000000"}},
-          title: {text: "Month", style: {color: "#000000"}},
+          title: {text: "Month", style: {color: "#000000"}, offsetY: -5},
         },
         yaxis: {
           min: -800, /* min(y values) - 100 */
