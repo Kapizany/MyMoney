@@ -4,58 +4,6 @@ import Chart, { Props } from "react-apexcharts";
 import "./styles.css";
 
 
-export class ExpensesByCategoryChart extends React.Component<{}, Props> {
-  constructor(props: any) {
-    super(props);
-
-    this.state = {
-      series: [44, 55, 13, 43, 22],
-      options: {
-        chart: {
-          id: "expenses-by-category",
-          background: "#eeeef2",
-          toolbar: {
-            show: true,
-            tools: {
-              download: true,
-              selection: false,
-              zoom: false,
-              zoomin: false,
-              zoomout: false,
-              pan: false,
-              reset: false,
-            },
-          },
-        },
-        labels: ["Market", "Transportation", "Housing", "Savings", "Other"],
-        legend: {
-          position: "bottom",
-        },
-        title: {
-          text: "Expenses by Category",
-          align: "center",
-          margin: 30,
-          offsetY: 3,
-          style: {
-            fontSize: "20px",
-            color: "#1f2029",
-          },
-        },
-      },
-    };
-  }
-
-  render() {
-    return (
-      <Chart
-        options={this.state.options}
-        series={this.state.series}
-        type="pie"
-      />
-    );
-  }
-}
-
 export class CurrentDebitAndCreditChart extends React.Component<{}, Props> {
   constructor(props: any) {
     super(props);
@@ -201,6 +149,60 @@ export class CurrentDebitAndCreditChart extends React.Component<{}, Props> {
   }
 }
 
+
+export class ExpensesByCategoryChart extends React.Component<{}, Props> {
+  constructor(props: any) {
+    super(props);
+
+    this.state = {
+      series: [44, 55, 13, 43, 22],
+      options: {
+        chart: {
+          id: "expenses-by-category",
+          background: "#eeeef2",
+          toolbar: {
+            show: true,
+            tools: {
+              download: true,
+              selection: false,
+              zoom: false,
+              zoomin: false,
+              zoomout: false,
+              pan: false,
+              reset: false,
+            },
+          },
+        },
+        labels: ["Market", "Transportation", "Housing", "Savings", "Other"],
+        legend: {
+          position: "bottom",
+        },
+        title: {
+          text: "Expenses by Category",
+          align: "center",
+          margin: 30,
+          offsetY: 3,
+          style: {
+            fontSize: "20px",
+            color: "#1f2029",
+          },
+        },
+      },
+    };
+  }
+
+  render() {
+    return (
+      <Chart
+        options={this.state.options}
+        series={this.state.series}
+        type="pie"
+      />
+    );
+  }
+}
+
+
 export class DebitAndCreditChart extends React.Component<{}, Props> {
   constructor(props: any) {
     super(props);
@@ -275,6 +277,7 @@ export class DebitAndCreditChart extends React.Component<{}, Props> {
     );
   }
 }
+
 
 export class CumulativeBalanceChart extends React.Component<{}, Props> {
   constructor(props: any) {

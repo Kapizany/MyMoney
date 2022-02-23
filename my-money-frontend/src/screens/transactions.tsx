@@ -2,7 +2,6 @@ import {
   Flex,
   Heading,
 } from "@chakra-ui/react";
-import { table } from "console";
 import { useState } from "react";
 import { transactionsAPI } from "../api/transactions";
 import { BackgroundScreen } from "../components/BackgroundScreen";
@@ -36,8 +35,7 @@ export function Transactions(
   }
 
   function updateTableData() {
-    transactionsAPI
-    .getTransactionsList(
+    transactionsAPI.getTransactionsList(
       tokenLocalStorage ? tokenLocalStorage : "",
       tableData.data.page,
       pageSize)

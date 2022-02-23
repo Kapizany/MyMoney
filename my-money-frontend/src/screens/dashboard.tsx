@@ -1,4 +1,5 @@
 import { Flex } from "@chakra-ui/react";
+import { transactionsAPI } from "../api/transactions";
 import { BackgroundScreen } from "../components/BackgroundScreen";
 import {
   CumulativeBalanceChart,
@@ -13,6 +14,14 @@ import { SelectedPageProps } from "../interfaces/selectedPage";
 
 export function Dashboard({selectedPage, setSelectedPage}: SelectedPageProps) {
   setSelectedPage("dashboard");
+
+  const tokenLocalStorage = localStorage.getItem("mymoney_token");
+
+  transactionsAPI.getMonthlyValues(
+    tokenLocalStorage ? tokenLocalStorage : "") // ,
+    // "2008")
+  .then((response) => console.log(response))
+  .catch((error) => console.log("DEU RUIM!", error));
 
   return (
     <BackgroundScreen alignItems="normal" justifyContent="flex-start">

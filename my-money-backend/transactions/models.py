@@ -7,7 +7,6 @@ from django.utils.translation import gettext_lazy as _
 import re
 
 
-
 class UserManager(BaseUserManager):
     def _create_user(self, username, email, password, is_staff, is_superuser, **extra_fields):
         now = timezone.now()
@@ -48,6 +47,7 @@ class Person(AbstractBaseUser, PermissionsMixin):
 
     objects = UserManager()
 
+
     class Meta:
         verbose_name = _('Person')
         verbose_name_plural = _('People')
@@ -58,7 +58,7 @@ class Person(AbstractBaseUser, PermissionsMixin):
 
 
 class Transaction(models.Model):
-    value = models.IntegerField()
     date = models.DateField()
     description = models.TextField()
+    value = models.IntegerField()
     user = ForeignKey(Person, on_delete=models.CASCADE)
