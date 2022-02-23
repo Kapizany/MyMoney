@@ -52,16 +52,13 @@ class TransactionViewSet(viewsets.ModelViewSet):
         results = {}
 
         previous_cumulative_balance = 0
-
         for index, month in enumerate(months):
-            debit = Transaction.objects.filter(
-                user=request.user,
+            debit = self.get_queryset().filter(
                 date__year=year,
                 date__month=index+1,
                 value__lte=0).aggregate(Sum("value"))["value__sum"] or 0
 
-            credit = Transaction.objects.filter(
-                user=request.user,
+            credit = self.get_queryset().filter(
                 date__year=year,
                 date__month=index+1,
                 value__gte=0).aggregate(Sum("value"))["value__sum"] or 0

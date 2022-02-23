@@ -58,7 +58,20 @@ class Person(AbstractBaseUser, PermissionsMixin):
 
 
 class Transaction(models.Model):
+    TRASACTIONS_CATEGORY = [
+        ('market', 'Market'),
+        ('transportation', 'Transportation'),
+        ('clothing', 'Clothing'),
+        ('bills', 'Bills'),
+        ('health_expenses', 'Health expenses'),
+        ('savings', 'Savings'),
+        ('other', 'Other'),
+    ]
     date = models.DateField()
     description = models.TextField()
-    value = models.IntegerField()
+    value = models.DecimalField(max_digits=15, decimal_places=2)
+    category = models.CharField(
+        max_length=15,
+        choices=TRASACTIONS_CATEGORY
+    )
     user = ForeignKey(Person, on_delete=models.CASCADE)
