@@ -1,4 +1,5 @@
 import { Flex } from "@chakra-ui/react";
+import { useState } from "react";
 import { transactionsAPI } from "../api/transactions";
 import { BackgroundScreen } from "../components/BackgroundScreen";
 import {
@@ -14,14 +15,65 @@ import { SelectedPageProps } from "../interfaces/selectedPage";
 
 export function Dashboard({selectedPage, setSelectedPage}: SelectedPageProps) {
   setSelectedPage("dashboard");
+  const [loading, setLoading] = useState(true);
+  const [years, setYears] = useState<string[]>([]);
+  const [year, setYear] = useState("");
+  const [debitAndCreditSeries, setDebitAndCreditSeries] = useState<any[]>([]);
+  const [cumulativeBalanceSeries, setCumulativeBalanceSeries] = useState<any[]>([]);
 
   const tokenLocalStorage = localStorage.getItem("mymoney_token");
 
-  transactionsAPI.getMonthlyValues(
-    tokenLocalStorage ? tokenLocalStorage : "") // ,
-    // "2008")
-  .then((response) => console.log(response))
-  .catch((error) => console.log("DEU RUIM!", error));
+  function updateData() {
+    transactionsAPI.getMonthlyValues(
+      tokenLocalStorage ? tokenLocalStorage : "")
+    .then((response) => {
+      setDebitAndCreditSeries([
+        {
+          name: "Debit",
+          type: "column",
+          data: Object.keys(response.data).map((month) => {
+            return response.data[month]["debit"];
+          }),
+        },
+        {
+          name: "Credit",
+          type: "column",
+          data: Object.keys(response.data).map((month) => {
+            return response.data[month]["credit"];
+          }),
+        },
+        {
+          name: "Monthly Balance",
+          type: "line",
+          data: Object.keys(response.data).map((month) => {
+            return response.data[month]["balance"];
+          }),
+        },
+      ]);
+
+      setCumulativeBalanceSeries([
+        {
+          name: "Comulative Balance",
+          type: "line",
+          data: Object.keys(response.data).map((month) => {
+            return response.data[month]["cumulative_balance"];
+          }),
+        },
+      ]);
+
+      setLoading(false);
+    })
+    .catch((error) => console.log(error));
+  }
+
+  if (loading) {
+    transactionsAPI.getYears(
+      tokenLocalStorage ? tokenLocalStorage : "")
+    .then((response) => setYears(response.data))
+    .catch((error) => console.log(error));
+
+    updateData();
+  }
 
   return (
     <BackgroundScreen alignItems="normal" justifyContent="flex-start">
@@ -64,7 +116,7 @@ export function Dashboard({selectedPage, setSelectedPage}: SelectedPageProps) {
           mb="1rem"
           boxShadow="0px 0px 8px 0px rgba(0,0,0,0.4)"
         >
-          <DebitAndCreditChart />
+          <DebitAndCreditChart series={debitAndCreditSeries} />
         </Flex>
         <Flex
           h="90vh"
@@ -73,7 +125,10 @@ export function Dashboard({selectedPage, setSelectedPage}: SelectedPageProps) {
           mb="1rem"
           boxShadow="0px 0px 8px 0px rgba(0,0,0,0.4)"
         >
-          <CumulativeBalanceChart />
+          <CumulativeBalanceChart
+            series={cumulativeBalanceSeries}
+            years={years}
+          />
         </Flex>
       </Flex>
     </BackgroundScreen>

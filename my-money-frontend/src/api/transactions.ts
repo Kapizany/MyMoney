@@ -9,16 +9,22 @@ export const transactionsAPI = {
 
   getMonthlyValues:
     async (token: string, year?: string) => {
-      const queryParam = year ? `?year=${year}` : "";
-
       return await api.get(
-        `transactions/get_monthly_values/${queryParam}`,
+        `transactions/get_monthly_values/${year ? `?year=${year}` : ""}`,
+        { headers: { Authorization: `Token ${token}` } })
+    },
+
+  getYears:
+    async (token: string) => {
+      return await api.get(
+        `transactions/get_years/`,
         { headers: { Authorization: `Token ${token}` } })
     },
 
   createTransaction:
     async (token: string,
       transactionData: {
+        category: string;
         date: string;
         description: string;
         value: number | string
@@ -30,6 +36,7 @@ export const transactionsAPI = {
     async (token: string,
       id: number,
       transactionData: {
+        category: string;
         date: string;
         description: string;
         value: number | string

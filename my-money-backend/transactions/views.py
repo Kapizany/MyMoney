@@ -5,6 +5,8 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from .serializers import PersonSerializer, TransactionSerializer
 from .models import Person, Transaction
+from decimal import Decimal
+import json
 
 
 class PersonViewSet(viewsets.ModelViewSet):
@@ -56,12 +58,12 @@ class TransactionViewSet(viewsets.ModelViewSet):
             debit = self.get_queryset().filter(
                 date__year=year,
                 date__month=index+1,
-                value__lte=0).aggregate(Sum("value"))["value__sum"] or 0
+                value__lte=0).aggregate(Sum("value"))["value__sum"] or Decimal("0.00")
 
             credit = self.get_queryset().filter(
                 date__year=year,
                 date__month=index+1,
-                value__gte=0).aggregate(Sum("value"))["value__sum"] or 0
+                value__gte=0).aggregate(Sum("value"))["value__sum"] or Decimal("0.00")
 
             if index > 0:
                 previous_cumulative_balance = results[months[index-1]
@@ -76,3 +78,18 @@ class TransactionViewSet(viewsets.ModelViewSet):
             }
 
         return Response(results)
+
+    @action(detail=False, methods=["get"],
+            name="Get years where there are transactions")
+    def get_years(self, request):
+        transactions = self.get_queryset()
+
+        years = []
+
+        for transaction in transactions:
+            if str(transaction.date.year) not in years:
+                years.append(str(transaction.date.year))
+
+        years.sort()
+
+        return Response(years)
