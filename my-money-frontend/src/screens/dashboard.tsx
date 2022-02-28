@@ -4,8 +4,8 @@ import { transactionsAPI } from "../api/transactions";
 import { BackgroundScreen } from "../components/BackgroundScreen";
 import {
   CumulativeBalanceChart,
-  CurrentDebitAndCreditChart,
-  DebitAndCreditChart,
+  CurrentMonthChart,
+  CreditAndDebitChart,
   ExpensesByCategoryChart
 } from "../components/Charts";
 import { Header } from "../components/Header";
@@ -17,29 +17,48 @@ export function Dashboard({selectedPage, setSelectedPage}: SelectedPageProps) {
   setSelectedPage("dashboard");
   const [loading, setLoading] = useState(true);
   const [years, setYears] = useState<string[]>([]);
-  const [year, setYear] = useState("");
-  const [debitAndCreditSeries, setDebitAndCreditSeries] = useState<any[]>([]);
+  const [year, setYear] = useState(String(new Date().getFullYear()));
+  const [CurrentMonthSeries, setCurrentMonthSeries] = useState<any[]>([]);
+  const [expensesByCategorySeries, setExpensesByCategorySeries] = useState<any[]>([]);
+  const [CreditAndDebitSeries, setCreditAndDebitSeries] = useState<any[]>([]);
   const [cumulativeBalanceSeries, setCumulativeBalanceSeries] = useState<any[]>([]);
 
   const tokenLocalStorage = localStorage.getItem("mymoney_token");
 
   function updateData() {
     transactionsAPI.getMonthlyValues(
-      tokenLocalStorage ? tokenLocalStorage : "")
+      tokenLocalStorage ? tokenLocalStorage : "",
+      year)
     .then((response) => {
-      setDebitAndCreditSeries([
+      if (CurrentMonthSeries.length === 0) {
+        const currentMonth = new Date().toLocaleString("en-us", { month: "long" });
+        setCurrentMonthSeries([
+          {
+            name: "Credit",
+            type: "bar",
+            data: [response.data[currentMonth]["credit"]]
+          },
+          {
+            name: "Debit",
+            type: "bar",
+            data: [Math.abs(response.data[currentMonth]["debit"])]
+          },
+        ]);
+      }
+
+      setCreditAndDebitSeries([
         {
-          name: "Debit",
-          type: "column",
+          name: "Credit",
+          type: "bar",
           data: Object.keys(response.data).map((month) => {
-            return response.data[month]["debit"];
+            return response.data[month]["credit"];
           }),
         },
         {
-          name: "Credit",
-          type: "column",
+          name: "Debit",
+          type: "bar",
           data: Object.keys(response.data).map((month) => {
-            return response.data[month]["credit"];
+            return response.data[month]["debit"];
           }),
         },
         {
@@ -60,17 +79,27 @@ export function Dashboard({selectedPage, setSelectedPage}: SelectedPageProps) {
           }),
         },
       ]);
-
-      setLoading(false);
     })
     .catch((error) => console.log(error));
+
+    transactionsAPI.getCategories(
+      tokenLocalStorage ? tokenLocalStorage : "",
+      year)
+    .then((response) => {
+      setExpensesByCategorySeries(Object.values(response.data));
+    })
+    .catch((error) => console.log(error));
+
+    setLoading(false);
   }
 
   if (loading) {
-    transactionsAPI.getYears(
-      tokenLocalStorage ? tokenLocalStorage : "")
-    .then((response) => setYears(response.data))
-    .catch((error) => console.log(error));
+    if (years.length === 0) {
+      transactionsAPI.getYears(
+        tokenLocalStorage ? tokenLocalStorage : "")
+      .then((response) => setYears(response.data))
+      .catch((error) => console.log(error));
+    }
 
     updateData();
   }
@@ -81,32 +110,39 @@ export function Dashboard({selectedPage, setSelectedPage}: SelectedPageProps) {
       <SideBarMenu selectedPage={selectedPage}/>
       <Flex
         w="83vw"
+        h="fit-content"
         mt="6vh"
         ml="17vw"
         bgColor="gray.100"
         flexDirection="column"
       >
         <Flex
+          flexShrink="0"
           mx="1rem"
           mt="1rem"
           mb="1rem"
           alignItems="center"
           justifyContent="space-between"
-          flexShrink= "0"
         >
           <Flex
             w="40%"
             h="90vh"
             boxShadow="0px 0px 8px 0px rgba(0,0,0,0.4)"
           >
-            <CurrentDebitAndCreditChart />
+            <CurrentMonthChart series={CurrentMonthSeries} />
           </Flex>
           <Flex
             w="58%"
             h="fit-content"
             boxShadow="0px 0px 8px 0px rgba(0,0,0,0.4)"
           >
-            <ExpensesByCategoryChart />
+            <ExpensesByCategoryChart
+              series={expensesByCategorySeries}
+              years={years}
+              year={year}
+              setYear={setYear}
+              setLoading={setLoading}
+            />
           </Flex>
         </Flex>
         <Flex
@@ -116,11 +152,17 @@ export function Dashboard({selectedPage, setSelectedPage}: SelectedPageProps) {
           mb="1rem"
           boxShadow="0px 0px 8px 0px rgba(0,0,0,0.4)"
         >
-          <DebitAndCreditChart series={debitAndCreditSeries} />
+          <CreditAndDebitChart
+            series={CreditAndDebitSeries}
+            years={years}
+            year={year}
+            setYear={setYear}
+            setLoading={setLoading}
+          />
         </Flex>
         <Flex
           h="90vh"
-          flexShrink= "0"
+          flexShrink="0"
           mx="1rem"
           mb="1rem"
           boxShadow="0px 0px 8px 0px rgba(0,0,0,0.4)"
@@ -128,6 +170,9 @@ export function Dashboard({selectedPage, setSelectedPage}: SelectedPageProps) {
           <CumulativeBalanceChart
             series={cumulativeBalanceSeries}
             years={years}
+            year={year}
+            setYear={setYear}
+            setLoading={setLoading}
           />
         </Flex>
       </Flex>

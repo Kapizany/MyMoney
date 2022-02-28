@@ -68,10 +68,10 @@ class Transaction(models.Model):
         ('other', 'Other'),
     ]
     date = models.DateField()
-    description = models.TextField()
-    value = models.DecimalField(max_digits=15, decimal_places=2)
     category = models.CharField(
         max_length=15,
         choices=TRASACTIONS_CATEGORY
     )
+    description = models.TextField()
+    value = models.DecimalField(max_digits=15, decimal_places=2)
     user = ForeignKey(Person, on_delete=models.CASCADE)

@@ -39,7 +39,7 @@ export const TransactionsTable:React.FC<TransactionsTableProps> = (
       setLastPageOnNewTransaction
     }) => {
   const [transactionId, setTransactionId] = useState(-1);
-  const [transactionCategory, setTransactionCategory] = useState("other");
+  const [transactionCategory, setTransactionCategory] = useState("");
   const [transactionDate, setTransactionDate] = useState("");
   const [transactionDescription, setTransactionDescription] = useState("");
   const [transactionValue, setTransactionValue] = useState<number|string>("");
@@ -79,6 +79,7 @@ export const TransactionsTable:React.FC<TransactionsTableProps> = (
 
   function resetModalInputs() {
     setTransactionId(-1);
+    setTransactionCategory("");
     setTransactionDate("");
     setTransactionDescription("");
     setTransactionValue("");
@@ -233,26 +234,6 @@ const TransactionModal:React.FC<TransactionModalProps & ModalProps> = (
           />
           <ModalBody>
             <Stack>
-              <Select
-                variant="flushed"
-                size="lg"
-                borderColor="dollar.500"
-                focusBorderColor="dollar.500"
-                color="dollar.900"
-                placeholder="Category"
-                value={transactionCategory}
-                onChange={(event) => {
-                  setTransactionCategory(event.target.value);
-                }}
-              >
-                <option value="market" color="#ff0000">Market</option>
-                <option value="transportation">Transportation</option>
-                <option value="clothing">Clothing</option>
-                <option value="bills">Bills</option>
-                <option value="health_expenses">Health expenses</option>
-                <option value="savings">Savings</option>
-                <option value="other">Other</option>
-              </Select>
               <Input
                 name="date"
                 type="date"
@@ -262,6 +243,27 @@ const TransactionModal:React.FC<TransactionModalProps & ModalProps> = (
                   setTransactionDate(event.target.value);
                 }}
               />
+              <Select
+                name="category"
+                placeholder="Category"
+                variant="flushed"
+                size="lg"
+                borderColor="dollar.500"
+                focusBorderColor="dollar.500"
+                color="dollar.900"
+                value={transactionCategory}
+                onChange={(event) => {
+                  setTransactionCategory(event.target.value);
+                }}
+              >
+                <option value="market">Market</option>
+                <option value="transportation">Transportation</option>
+                <option value="clothing">Clothing</option>
+                <option value="bills">Bills</option>
+                <option value="health_expenses">Health expenses</option>
+                <option value="savings">Savings</option>
+                <option value="other">Other</option>
+              </Select>
               <Input
                 name="description"
                 type="text"
@@ -278,7 +280,7 @@ const TransactionModal:React.FC<TransactionModalProps & ModalProps> = (
                 value={transactionValue}
                 onChange={(event) => {
                   setTransactionValue(
-                    event.target.value.replace(/[^0-9.,]/g, ''));
+                    event.target.value.replace(/[^0-9.,-]/g, ''));
                 }}
               />
             </Stack>
