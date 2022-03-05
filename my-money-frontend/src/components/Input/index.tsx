@@ -9,6 +9,7 @@ export function Input({ name, placeholder, ...rest }: InputProps) {
         name={name}
         id={name}
         placeholder={placeholder}
+        _placeholder={{ color: "dollar.900" }}
         textColor="dollar.900"
         borderColor="dollar.500"
         focusBorderColor="dollar.500"

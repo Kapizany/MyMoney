@@ -17,7 +17,7 @@ export const Header = () => {
   return (
     <Flex
       position="fixed"
-      zIndex="1"
+      zIndex="12" // only works with >= 12
       left="0"
       right="0"
       h="6vh"

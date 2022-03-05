@@ -10,6 +10,7 @@ import {
   ModalHeader,
   ModalOverlay,
   ModalProps,
+  Select,
   Stack,
   Table,
   Tbody,
@@ -35,15 +36,26 @@ export const TransactionsTable:React.FC<TransactionsTableProps> = (
       deleteTransaction,
       setLoadingToTrue,
       updateTableData,
-      setLastPageOnNewTransaction,
+      setLastPageOnNewTransaction
     }) => {
   const [transactionId, setTransactionId] = useState(-1);
+  const [transactionCategory, setTransactionCategory] = useState("");
   const [transactionDate, setTransactionDate] = useState("");
   const [transactionDescription, setTransactionDescription] = useState("");
   const [transactionValue, setTransactionValue] = useState<number|string>("");
   const [newTransaction, setNewTransaction] = useState(true);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const categories: any = {
+    "market": "Market",
+    "transportation": "Transportation",
+    "clothing": "Clothing",
+    "bills": "Bills",
+    "health_expenses": "Health expenses",
+    "savings": "Savings",
+    "other": "Other"
+  };
 
   function openModalAdd() {
     setNewTransaction(true);
@@ -52,11 +64,13 @@ export const TransactionsTable:React.FC<TransactionsTableProps> = (
 
   function openModalEdit(
       transactionId: number,
+      transactionCategory: string,
       transactionDate: string,
       transactionDescription: string,
       transactionValue: number | string) {
     setNewTransaction(false);
     setTransactionId(transactionId);
+    setTransactionCategory(transactionCategory);
     setTransactionDate(transactionDate);
     setTransactionDescription(transactionDescription);
     setTransactionValue(transactionValue);
@@ -65,6 +79,7 @@ export const TransactionsTable:React.FC<TransactionsTableProps> = (
 
   function resetModalInputs() {
     setTransactionId(-1);
+    setTransactionCategory("");
     setTransactionDate("");
     setTransactionDescription("");
     setTransactionValue("");
@@ -83,6 +98,7 @@ export const TransactionsTable:React.FC<TransactionsTableProps> = (
           <Th>Data</Th>
           <Th>Day</Th>
           <Th>Description</Th>
+          <Th>Category</Th>
           <Th isNumeric>Value (USD)</Th>
           <Th display="flex" justifyContent="center">
             <Button
@@ -99,6 +115,8 @@ export const TransactionsTable:React.FC<TransactionsTableProps> = (
             <TransactionModal
               newTransaction={newTransaction}
               transactionId={transactionId}
+              transactionCategory={transactionCategory}
+              setTransactionCategory={setTransactionCategory}
               transactionDate={transactionDate}
               setTransactionDate={setTransactionDate}
               transactionDescription={transactionDescription}
@@ -123,6 +141,7 @@ export const TransactionsTable:React.FC<TransactionsTableProps> = (
               <Td>{transaction.date}</Td>
               <Td>{getWeekdayFromDate(transaction.date)}</Td>
               <Td>{transaction.description}</Td>
+              <Td>{categories[transaction.category]}</Td>
               <Td isNumeric>{transaction.value}</Td>
               <Td>
                 <Flex justifyContent="center">
@@ -141,6 +160,7 @@ export const TransactionsTable:React.FC<TransactionsTableProps> = (
                       onClick={() => {
                         openModalEdit(
                           transaction.id,
+                          transaction.category,
                           transaction.date,
                           transaction.description,
                           transaction.value);
@@ -175,6 +195,8 @@ const TransactionModal:React.FC<TransactionModalProps & ModalProps> = (
     {
       newTransaction,
       transactionId,
+      transactionCategory,
+      setTransactionCategory,
       transactionDate,
       setTransactionDate,
       transactionDescription,
@@ -221,6 +243,27 @@ const TransactionModal:React.FC<TransactionModalProps & ModalProps> = (
                   setTransactionDate(event.target.value);
                 }}
               />
+              <Select
+                name="category"
+                placeholder="Category"
+                variant="flushed"
+                size="lg"
+                borderColor="dollar.500"
+                focusBorderColor="dollar.500"
+                color="dollar.900"
+                value={transactionCategory}
+                onChange={(event) => {
+                  setTransactionCategory(event.target.value);
+                }}
+              >
+                <option value="market">Market</option>
+                <option value="transportation">Transportation</option>
+                <option value="clothing">Clothing</option>
+                <option value="bills">Bills</option>
+                <option value="health_expenses">Health expenses</option>
+                <option value="savings">Savings</option>
+                <option value="other">Other</option>
+              </Select>
               <Input
                 name="description"
                 type="text"
@@ -237,7 +280,7 @@ const TransactionModal:React.FC<TransactionModalProps & ModalProps> = (
                 value={transactionValue}
                 onChange={(event) => {
                   setTransactionValue(
-                    event.target.value.replace(/[^0-9.,]/g, ''));
+                    event.target.value.replace(/[^0-9.,-]/g, ''));
                 }}
               />
             </Stack>
@@ -253,6 +296,7 @@ const TransactionModal:React.FC<TransactionModalProps & ModalProps> = (
                   await transactionsAPI.createTransaction(
                     tokenLocalStorage ? tokenLocalStorage : "",
                     {
+                      category: transactionCategory,
                       date: transactionDate,
                       description: transactionDescription,
                       value: transactionValue,
@@ -264,6 +308,7 @@ const TransactionModal:React.FC<TransactionModalProps & ModalProps> = (
                     tokenLocalStorage ? tokenLocalStorage : "",
                     transactionId,
                     {
+                      category: transactionCategory,
                       date: transactionDate,
                       description: transactionDescription,
                       value: transactionValue,

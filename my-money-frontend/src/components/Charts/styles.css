@@ -1,0 +1,16 @@
+.apexcharts-menu {
+  background-color: #ffffff !important;
+  color: #000000 !important;
+}
+
+.apexcharts-menu-item:hover {
+  background-color: #d1d2dc !important;
+}
+
+.pieChart .apexcharts-tooltip {
+  color: #ffffff !important;
+}
+
+.barChart .apexcharts-tooltip {
+  color: #000000 !important;
+}

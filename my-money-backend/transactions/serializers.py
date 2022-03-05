@@ -5,16 +5,16 @@ from .models import Person, Transaction
 class PersonSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Person
-        fields = ['id', 'full_name', 'email']
+        fields = ["id", "full_name", "email"]
 
 
 class TransactionSerializer(serializers.ModelSerializer):
-    user=serializers.EmailField(source='user.email', read_only=True, default=serializers.CurrentUserDefault())
+    user=serializers.EmailField(source="user.email", read_only=True, default=serializers.CurrentUserDefault())
     class Meta:
         model = Transaction
-        fields = ['id', 'value', 'date', 'description', 'user']
+        fields = ["id", "category", "date", "description", "value", "user"]
 
     def create(self, validated_data):
         data = validated_data.copy()
-        data['user'] = self.context['request'].user
+        data["user"] = self.context["request"].user
         return super().create(data)
