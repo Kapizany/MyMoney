@@ -1,4 +1,4 @@
-import { Flex } from "@chakra-ui/react";
+import { Flex, Heading } from "@chakra-ui/react";
 import { useState } from "react";
 import { transactionsAPI } from "../api/transactions";
 import { BackgroundScreen } from "../components/BackgroundScreen";
@@ -10,6 +10,7 @@ import {
 } from "../components/Charts";
 import { Header } from "../components/Header";
 import { SideBarMenu } from "../components/SideBarMenu";
+import { YearSelector } from "../components/YearSelector";
 import { SelectedPageProps } from "../interfaces/selectedPage";
 
 
@@ -117,6 +118,25 @@ export function Dashboard({selectedPage, setSelectedPage}: SelectedPageProps) {
         flexDirection="column"
       >
         <Flex
+          h="3rem"
+          flexShrink="0"
+          mt="1rem"
+          mx="1rem"
+          pl="1rem"
+          alignItems="center"
+          justifyContent="space-between"
+          bgColor="gray.50"
+          boxShadow="0px 0px 8px 0px rgba(0,0,0,0.4)"
+        >
+          <Heading size="md" color="dollar.900">Dashboard</Heading>
+          <YearSelector
+            years={years}
+            year={year}
+            setYear={setYear}
+            setLoading={setLoading}
+          />
+        </Flex>
+        <Flex
           flexShrink="0"
           mx="1rem"
           mt="1rem"
@@ -126,7 +146,7 @@ export function Dashboard({selectedPage, setSelectedPage}: SelectedPageProps) {
         >
           <Flex
             w="40%"
-            h="90vh"
+            h="80vh"
             boxShadow="0px 0px 8px 0px rgba(0,0,0,0.4)"
           >
             <CurrentMonthChart series={CurrentMonthSeries} />

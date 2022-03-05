@@ -1,6 +1,7 @@
-import { Flex, Select } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 import { ApexOptions } from "apexcharts";
 import Chart, { Props } from "react-apexcharts";
+import { YearSelector } from "../YearSelector";
 import { YearSelectorProps } from "../../interfaces/yearSelector";
 import "./styles.css";
 
@@ -132,11 +133,11 @@ export function ExpensesByCategoryChart({
     colors: [
       "#ffff00",
       "#00ff00",
+      "#ff7f00",
       "#7f007f",
       "#ff0000",
-      "#ff7f00",
-      "#ff00ff",
       "#0000ff",
+      "#000000",
     ],
     legend: {
       position: "bottom",
@@ -158,7 +159,7 @@ export function ExpensesByCategoryChart({
 
   return (
     <Flex w="100%" flexDirection="column">
-      <Chart options={options} series={series} type="pie" />
+      <Chart options={options} series={series} type="pie" className="pieChart" />
       <YearSelector
         years={years}
         year={year}
@@ -234,7 +235,7 @@ export function CreditAndDebitChart({
 
   return (
     <Flex w="100%" flexDirection="column">
-      <Chart options={options} series={series} height="95%" />
+      <Chart options={options} series={series} height="95%" className="barChart" />
       <YearSelector
         years={years}
         year={year}
@@ -303,42 +304,13 @@ export function CumulativeBalanceChart({
 
   return (
     <Flex w="100%" flexDirection="column">
-      <Chart options={options} series={series} height="95%" />
+      <Chart options={options} series={series} height="95%" className="barChart" />
       <YearSelector
         years={years}
         year={year}
         setYear={setYear}
         setLoading={setLoading}
       />
-    </Flex>
-  );
-}
-
-
-function YearSelector({ years, year, setYear, setLoading }: YearSelectorProps) {
-  return (
-    <Flex h="5%" alignItems="center" justifyContent="center" bgColor="#eeeef2">
-      <Flex mr="0.25rem" fontWeight="bold" color="#1f2029">
-        Year:
-      </Flex>
-      <Select
-        maxWidth="fit-content"
-        variant="unstyled"
-        color="#000000"
-        value={year}
-        onChange={(event) => {
-          setYear(event.target.value);
-          setLoading(true);
-        }}
-      >
-        {years.map((year: string) => {
-          return (
-            <option key={year} value={year}>
-              {year}
-            </option>
-          );
-        })}
-      </Select>
     </Flex>
   );
 }
