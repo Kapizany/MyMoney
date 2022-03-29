@@ -44,12 +44,14 @@ export function Login() {
         <Input
           name="username"
           type="username"
+          label="username"
           placeholder="Usuário"
           onChange={(event) => handleInput(event, setUsername)}
         />
         <Input
           name="password"
           type="password"
+          label="password"
           placeholder="Senha"
           onChange={(event) => handleInput(event, setPassword)}
         />
