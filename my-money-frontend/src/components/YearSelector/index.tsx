@@ -23,10 +23,10 @@ export function YearSelector({
           setLoading(true);
         }}
       >
-        {years.map((year: string) => {
+        {years.map((yearOption: string) => {
           return (
-            <option key={year} value={year}>
-              {year}
+            <option key={yearOption} value={yearOption}>
+              {yearOption}
             </option>
           );
         })}

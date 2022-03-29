@@ -1,10 +1,10 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router';
 import { Button, Link, Flex, Stack} from '@chakra-ui/react';
 import { loginAPI } from '../api/login';
-import { Input } from '../components/Input';
 import { BackgroundScreen } from '../components/BackgroundScreen';
+import { Input } from '../components/Input';
 import { Logo } from '../components/Logo';
-import { useNavigate } from 'react-router';
 
 
 export function Login() {
@@ -45,14 +45,14 @@ export function Login() {
           name="username"
           type="username"
           label="username"
-          placeholder="Usuário"
+          placeholder="Email"
           onChange={(event) => handleInput(event, setUsername)}
         />
         <Input
           name="password"
           type="password"
           label="password"
-          placeholder="Senha"
+          placeholder="Password"
           onChange={(event) => handleInput(event, setPassword)}
         />
       </Stack>
@@ -62,7 +62,7 @@ export function Login() {
         color="dollar.900"
         _hover={{textDecoration: "none"}}
       >
-        Esqueceu a senha?
+        Forgot password?
       </Link>
 
       <Button
@@ -72,9 +72,10 @@ export function Login() {
         bgColor="dollar.500"
         size="lg"
         _hover={{bgColor: 'dollar.600'}}
+        _focus={{outline: "none"}}
         onClick={handleSubmit}
       >
-        Entrar
+        Sign in
       </Button>
     </Flex>
   </BackgroundScreen>
