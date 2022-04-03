@@ -21,7 +21,13 @@ export const SideBarMenu: React.FC<{selectedPage: string}> = ({selectedPage}) =>
       flexDirection="column"
       boxShadow="7px 0px 5px -4px rgba(0,0,0,0.4)" // "7px 1px 5px -3px rgba(0,0,0,0.4)"
     >
-      <Flex w="100%" flexDirection="row" my="1rem" alignItems="center">
+      <Flex
+        id="avatar-and-name-container"
+        w="100%"
+        flexDirection="row"
+        my="1rem"
+        alignItems="center"
+      >
         <Avatar size='sm' ml="1rem" mr="0.5rem"/>
         <Text >Name</Text>
       </Flex>

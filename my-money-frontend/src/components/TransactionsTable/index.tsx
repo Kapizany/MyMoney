@@ -36,7 +36,7 @@ export const TransactionsTable:React.FC<TransactionsTableProps> = (
       deleteTransaction,
       setLoadingToTrue,
       updateTableData,
-      setLastPageOnNewTransaction
+      setLastPageOnNewTransaction,
     }) => {
   const [transactionId, setTransactionId] = useState(-1);
   const [transactionCategory, setTransactionCategory] = useState("");

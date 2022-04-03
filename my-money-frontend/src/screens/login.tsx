@@ -1,10 +1,10 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router';
-import { Button, Link, Flex, Stack} from '@chakra-ui/react';
-import { loginAPI } from '../api/login';
-import { BackgroundScreen } from '../components/BackgroundScreen';
-import { Input } from '../components/Input';
-import { Logo } from '../components/Logo';
+import { useState } from "react";
+import { useNavigate } from "react-router";
+import { Button, Link, Flex, Stack} from "@chakra-ui/react";
+import { loginAPI } from "../api/login";
+import { BackgroundScreen } from "../components/BackgroundScreen";
+import { Input } from "../components/Input";
+import { Logo } from "../components/Logo";
 
 
 export function Login() {
@@ -15,17 +15,17 @@ export function Login() {
 
   function handleInput(event: React.ChangeEvent<HTMLInputElement>,
       setFunction: (arg: string) => void) {
-    setFunction(event.target.value)
+    setFunction(event.target.value);
   }
 
   async function handleSubmit(event: React.MouseEvent<HTMLButtonElement,
-      MouseEvent>){
+      MouseEvent>) {
     event.preventDefault();
     const response = await loginAPI.createToken({
-      "username":username,
-      "password":password,
+      "username": username,
+      "password": password,
     });
-    localStorage.setItem("mymoney_token",response.data.token);
+    localStorage.setItem("mymoney_token", response.data.token);
     history("/dashboard");
   }
 
@@ -71,7 +71,7 @@ export function Login() {
         color="gray.50"
         bgColor="dollar.500"
         size="lg"
-        _hover={{bgColor: 'dollar.600'}}
+        _hover={{bgColor: "dollar.600"}}
         _focus={{outline: "none"}}
         onClick={handleSubmit}
       >

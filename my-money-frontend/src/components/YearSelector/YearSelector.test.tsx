@@ -3,9 +3,9 @@ import { render, screen } from "@testing-library/react";
 import { YearSelector } from ".";
 
 
-describe("Test Year Selector Component", () => {
+describe("Test YearSelector component", () => {
 
-    it("should render year selector if no option is passed into years prop", () => {
+    it("should render YearSelector if no option is passed into years prop", () => {
         render(
             <YearSelector
                 years={[]}
@@ -17,7 +17,7 @@ describe("Test Year Selector Component", () => {
         expect(screen.getByText(/Year:/)).toBeVisible();
     });
 
-    it("should render year selector if one option is passed into years prop", () => {
+    it("should render YearSelector if one option is passed into years prop", () => {
         render(
             <YearSelector
                 years={["2022"]}
@@ -29,7 +29,7 @@ describe("Test Year Selector Component", () => {
         expect(screen.getByText(/Year:/)).toBeVisible();
     });
 
-    it("should render same year options passed into years prop", () => {
+    it("should render YearSelector with more than one year option passed into years prop", () => {
         render(
             <YearSelector
                 years={["2022", "2021"]}
@@ -42,7 +42,5 @@ describe("Test Year Selector Component", () => {
         expect(screen.getByRole("option", { name: "2022" })).toBeVisible();
         expect(screen.getByRole("option", { name: "2021" })).toBeVisible();
     });
-
-
 
 });
