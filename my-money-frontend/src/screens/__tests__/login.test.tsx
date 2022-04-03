@@ -1,12 +1,11 @@
 import "@testing-library/jest-dom";
-import { fireEvent, render, screen } from "@testing-library/react";
-import { useState } from "react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { Login } from "../login";
+import { loginAPI } from "../../api/login";
 
 
-const mockedUseState = jest.fn();
 jest.mock("react", () => ({
-useState: () => mockedUseState,
+    ...jest.requireActual("react"),
 }));
 
 const mockedUseNavigate = jest.fn();
@@ -14,13 +13,7 @@ jest.mock("react-router", () => ({
     useNavigate: () => mockedUseNavigate,
 }));
 
-jest.mock("../../api/login", () => ({
-    loginAPI: {
-        createToken: (data: { username: string; password: string }) => {
-            return "dummy-token";
-        }
-    },
-}));
+jest.mock("../../api/login");
 
 
 describe("Test Login page", () => {
@@ -55,19 +48,28 @@ describe("Test Login page", () => {
 
         it("calls loginAPI.createToken when Sign in button is clicked", async () => {
             render(<Login />);
-
-            const [username, setUsername] = useState("");
-            const [password, setPassword] = useState("");
-
-            const emailField = screen.getByPlaceholderText("Email");
-            const passwordField = screen.getByPlaceholderText("Password");
+            //@ts-ignore
+            loginAPI.createToken.mockResolvedValueOnce({data:{token:"dummy-token"}});
+            const emailField = screen.getByPlaceholderText("Email") as HTMLInputElement;
+            const passwordField = screen.getByPlaceholderText("Password") as HTMLInputElement;
 
             fireEvent.change(emailField, { target: { value: "dummy-email" } });
             fireEvent.change(passwordField, { target: { value: "dummy-password" } });
+            expect(emailField?.value).toBe("dummy-email");
+            expect(passwordField?.value).toBe("dummy-password");
 
             const signInButton = screen.getByRole("button", { "name": /Sign in/ });
-            fireEvent.click(signInButton); // err comes from this line
-            // expect(loginAPI.createToken).toBeCalled();
+            fireEvent.click(signInButton); 
+            expect(loginAPI.createToken).toHaveBeenCalledTimes(1);
+            expect(loginAPI.createToken).toBeCalledWith({
+                "password": "dummy-password",
+                "username": "dummy-email",
+            });
+            
+            await waitFor(() => localStorage.getItem("mymoney_token"));
+            expect(localStorage.getItem("mymoney_token")).toBe("dummy-token");
+            expect(mockedUseNavigate).toBeCalledWith("/dashboard");
+
         });
 
     });

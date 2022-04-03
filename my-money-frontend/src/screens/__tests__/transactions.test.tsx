@@ -20,7 +20,7 @@ const renderTransactions = () => {
 
 describe("renders correctly", () => {
 
-    it("renders page heading", () => {
+    it.skip("renders page heading", () => {
         renderTransactions();
         expect(screen.getByRole("heading", { name: "Transactions" }));
     });
