@@ -208,7 +208,8 @@ function whenOptionIsAlreadySelected(options: number[], pageSizeOption: number) 
 
 function whenOptionIsNotSelected(options: number[], pageSizeOption: number) {
     it(`calls the functions associated with option ${pageSizeOption} if pageSize differs from ${pageSizeOption}`, () => {
-        const wrapper = mountPagination(options[(options.indexOf(pageSizeOption) + 1) % 4], 1, 1);
+        // options[(options.indexOf(pageSizeOption) + 1) % options.length] gives us the next option element
+        const wrapper = mountPagination(options[(options.indexOf(pageSizeOption) + 1) % options.length], 1, 1);
 
         wrapper.find(MenuItem).at(options.indexOf(pageSizeOption)).simulate("click");
 

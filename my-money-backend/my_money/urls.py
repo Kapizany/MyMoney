@@ -26,6 +26,6 @@ router.register(r'transactions', TransactionViewSet, basename='Transaction')
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(router.urls)),
-    path('api-token-auth/', views.obtain_auth_token),
+    path('api-token-auth/', views.obtain_auth_token), # API create token endpoint
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ]
