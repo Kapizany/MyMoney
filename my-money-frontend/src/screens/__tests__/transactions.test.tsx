@@ -3,9 +3,9 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { Transactions } from "../transactions";
 
 
-const mockedUsedNavigate = jest.fn();
+const mockedUseNavigate = jest.fn();
 jest.mock("react-router", () => ({
-    useNavigate: () => mockedUsedNavigate,
+    useNavigate: () => mockedUseNavigate,
 }));
 
 const renderTransactions = () => {

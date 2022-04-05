@@ -3,11 +3,6 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { SideBarMenu } from ".";
 
 
-const mockedUsedNavigate = jest.fn();
-jest.mock("react-router-dom", () => ({
-    useNavigate: () => mockedUsedNavigate,
-}));
-
 describe("Test SideBarMenu component", () => {
 
     describe("renders correctly", () => {
@@ -19,49 +14,55 @@ describe("Test SideBarMenu component", () => {
             expect(container.querySelector(`div[id="avatar-and-name-container"]`)).toBeVisible();
         });
 
-        it("renders dashboard page option", () => {
-            render(
-                <SideBarMenu selectedPage="" />
-            );
-            expect(screen.getByText("Dashboard")).toBeVisible();
-        });
+        describe("renders page options", () => {
 
-        it("renders statement page option", () => {
-            render(
-                <SideBarMenu selectedPage="" />
-            );
-            expect(screen.getByText("Statement")).toBeVisible();
-        });
+            renderSideBarMenuBeforeEach();
 
-        it("renders transactions page option", () => {
-            render(
-                <SideBarMenu selectedPage="" />
-            );
-            expect(screen.getByText("Transactions")).toBeVisible();
+            it("renders dashboard page option", () => {
+                expect(screen.getByText("Dashboard")).toBeVisible();
+            });
+
+            it("renders statement page option", () => {
+                expect(screen.getByText("Statement")).toBeVisible();
+            });
+
+            it("renders transactions page option", () => {
+                expect(screen.getByText("Transactions")).toBeVisible();
+            });
+
         });
 
     });
 
     describe("works correctly", () => {
 
+        renderSideBarMenuBeforeEach();
+
         it("should call useNavigate when Dashboard option is clicked", () => {
-            render(
-                <SideBarMenu selectedPage="" />
-            );
             const dashboardPageOption = screen.getByText("Dashboard");
             fireEvent.click(dashboardPageOption);
-            expect(mockedUsedNavigate).toBeCalledWith("/dashboard");
+            expect(mockedUseNavigate).toBeCalledWith("/dashboard");
         });
 
         it("should call useNavigate when Transactions option is clicked", () => {
-            render(
-                <SideBarMenu selectedPage="" />
-            );
             const transactionsPageOption = screen.getByText("Transactions");
             fireEvent.click(transactionsPageOption);
-            expect(mockedUsedNavigate).toBeCalledWith("/transactions");
+            expect(mockedUseNavigate).toBeCalledWith("/transactions");
         });
 
     });
 
 });
+
+
+const mockedUseNavigate = jest.fn();
+jest.mock("react-router-dom", () => ({
+    useNavigate: () => mockedUseNavigate,
+}));
+
+
+function renderSideBarMenuBeforeEach() {
+    beforeEach(() => {
+        render(<SideBarMenu selectedPage="" />);
+    });
+}

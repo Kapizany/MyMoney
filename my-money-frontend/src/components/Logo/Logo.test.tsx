@@ -6,9 +6,7 @@ import { Logo } from ".";
 describe("Test Logo component", () => {
 
     it("renders correctly", () => {
-        render(
-            <Logo />
-        );
+        render(<Logo />);
         expect(screen.getByRole("heading", { name: "MyMoney" })).toBeVisible();
     });
 

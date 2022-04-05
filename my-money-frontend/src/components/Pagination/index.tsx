@@ -25,8 +25,14 @@ export const Pagination:React.FC<PaginationProps> = (
       updateData,
     }) => {
   return (
-    <Flex mt="1rem" mx="1rem" pb="1rem" justifyContent="center">
+    <Flex
+      mt="1rem"
+      mx="1rem"
+      pb="1rem"
+      justifyContent="center"
+    >
       <Button
+        id="goToFirstPage"
         size="sm"
         mr="0.5rem"
         px="-0.5rem"
@@ -125,7 +131,10 @@ export const Pagination:React.FC<PaginationProps> = (
             <Icon as={FaAngleDown} />
           </Flex>
         </MenuButton>
-        <MenuList bgColor="gray.50" color="dollar.900">
+        <MenuList
+          bgColor="gray.50"
+          color="dollar.900"
+        >
           <MenuItem
             onClick={() => {
               if (pageSize !== 5) {

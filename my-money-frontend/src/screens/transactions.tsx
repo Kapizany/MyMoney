@@ -71,12 +71,11 @@ export function Transactions(
   }
 
   function setLastPageOnNewTransaction() {
-    if (!(tableData.data.count % pageSize)) {
+    if (tableData.data.page !== lastPage) {
       setLastPage();
-      increasePageByOne();
     }
-    else {
-      if (tableData.data.page !== lastPage) setLastPage();
+    if (!(tableData.data.count % pageSize)) {
+      increasePageByOne();
     }
   }
 

@@ -300,7 +300,8 @@ const TransactionModal:React.FC<TransactionModalProps & ModalProps> = (
                       date: transactionDate,
                       description: transactionDescription,
                       value: transactionValue,
-                    });
+                    },
+                  );
                   setLastPageOnNewTransaction();
                 }
                 else {
@@ -312,7 +313,8 @@ const TransactionModal:React.FC<TransactionModalProps & ModalProps> = (
                       date: transactionDate,
                       description: transactionDescription,
                       value: transactionValue,
-                    });
+                    },
+                  );
                 }
                 onClose();
                 resetModalInputs();

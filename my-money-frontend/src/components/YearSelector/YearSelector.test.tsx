@@ -5,7 +5,7 @@ import { YearSelector } from ".";
 
 describe("Test YearSelector component", () => {
 
-    it("should render YearSelector if no option is passed into years prop", () => {
+    it("renders YearSelector if no option is passed into years prop", () => {
         render(
             <YearSelector
                 years={[]}
@@ -17,7 +17,7 @@ describe("Test YearSelector component", () => {
         expect(screen.getByText(/Year:/)).toBeVisible();
     });
 
-    it("should render YearSelector if one option is passed into years prop", () => {
+    it("renders YearSelector if one option is passed into years prop", () => {
         render(
             <YearSelector
                 years={["2022"]}
@@ -29,7 +29,7 @@ describe("Test YearSelector component", () => {
         expect(screen.getByText(/Year:/)).toBeVisible();
     });
 
-    it("should render YearSelector with more than one year option passed into years prop", () => {
+    it("renders YearSelector with more than one year option passed into years prop", () => {
         render(
             <YearSelector
                 years={["2022", "2021"]}

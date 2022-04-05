@@ -8,32 +8,32 @@ describe("Test Input component", () => {
     it("renders correctly", () => {
         const { container } = render(
             <Input
-                name="fake-name"
-                placeholder="fake-placeholder"
-                label="fake-label"
+                name="dummy-name"
+                placeholder="dummy-placeholder"
+                label="dummy-label"
             />
         );
-        expect(container.querySelector(`input[name="fake-name"]`)).toBeVisible();
-        expect(container.querySelector(`input[placeholder="fake-placeholder"]`)).toBeVisible();
-        expect(container.querySelector(`input[label="fake-label"]`)).toBeVisible();
+        expect(container.querySelector(`input[name="dummy-name"]`)).toBeVisible();
+        expect(container.querySelector(`input[placeholder="dummy-placeholder"]`)).toBeVisible();
+        expect(container.querySelector(`input[label="dummy-label"]`)).toBeVisible();
     });
 
     it("works correctly", () => {
         const { container } = render(
             <Input
-                name="fake-name"
-                placeholder="fake-placeholder"
-                label="fake-label"
+                name="dummy-name"
+                placeholder="dummy-placeholder"
+                label="dummy-label"
             />
         );
 
-        const input = container.querySelector(`input[name="fake-name"]`) as HTMLInputElement;
+        const input = container.querySelector(`input[name="dummy-name"]`) as HTMLInputElement;
 
-        if(input){
-            fireEvent.change(input, { target: { value: "fake-value" } });
+        if (input) {
+            fireEvent.change(input, { target: { value: "dummy-value" } });
         }
 
-        expect(input?.value).toBe("fake-value");
+        expect(input?.value).toBe("dummy-value");
     });
 
 });

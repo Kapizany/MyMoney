@@ -4,21 +4,14 @@ import { Login } from "../login";
 import { loginAPI } from "../../api/login";
 
 
-jest.mock("react", () => ({
-    ...jest.requireActual("react"),
-}));
-
-const mockedUseNavigate = jest.fn();
-jest.mock("react-router", () => ({
-    useNavigate: () => mockedUseNavigate,
-}));
-
-jest.mock("../../api/login");
-
-
 describe("Test Login page", () => {
 
     describe("renders correctly", () => {
+
+        it("renders logo", () => {
+            render(<Login />);
+            expect(screen.getByRole("heading", { name: "MyMoney" })).toBeVisible();
+        });
 
         it("renders Email input", () => {
             const { container } = render(<Login />);
@@ -26,7 +19,7 @@ describe("Test Login page", () => {
             expect(screen.getByPlaceholderText("Email")).toBeVisible();
         });
 
-        it("renders Email input", () => {
+        it("renders Password input", () => {
             const { container } = render(<Login />);
             expect(container.querySelector(`input[name="password"]`)).toBeVisible();
             expect(screen.getByPlaceholderText("Password")).toBeVisible();
@@ -34,7 +27,7 @@ describe("Test Login page", () => {
 
         it("renders Forgot password link", () => {
             render(<Login />);
-            expect(screen.getByText(/Forgot password/)).toBeVisible();
+            expect(screen.getByText(/Forgot password\?/)).toBeVisible();
         });
 
         it("renders Sign in button", () => {
@@ -46,32 +39,47 @@ describe("Test Login page", () => {
 
     describe("works correctly", () => {
 
-        it("calls loginAPI.createToken when Sign in button is clicked", async () => {
+        it("tests the call of handleSubmit when Sign in button is clicked", async () => {
             render(<Login />);
-            //@ts-ignore
-            loginAPI.createToken.mockResolvedValueOnce({data:{token:"dummy-token"}});
+
             const emailField = screen.getByPlaceholderText("Email") as HTMLInputElement;
             const passwordField = screen.getByPlaceholderText("Password") as HTMLInputElement;
 
             fireEvent.change(emailField, { target: { value: "dummy-email" } });
             fireEvent.change(passwordField, { target: { value: "dummy-password" } });
-            expect(emailField?.value).toBe("dummy-email");
-            expect(passwordField?.value).toBe("dummy-password");
+
+            //@ts-ignore
+            loginAPI.createToken.mockResolvedValueOnce({ data: { token: "dummy-token" } });
 
             const signInButton = screen.getByRole("button", { "name": /Sign in/ });
-            fireEvent.click(signInButton); 
+            await waitFor(() => fireEvent.click(signInButton));
+
             expect(loginAPI.createToken).toHaveBeenCalledTimes(1);
             expect(loginAPI.createToken).toBeCalledWith({
                 "password": "dummy-password",
                 "username": "dummy-email",
             });
-            
-            await waitFor(() => localStorage.getItem("mymoney_token"));
-            expect(localStorage.getItem("mymoney_token")).toBe("dummy-token");
-            expect(mockedUseNavigate).toBeCalledWith("/dashboard");
 
+            localStorage.getItem("mymoney_token");
+            expect(localStorage.getItem("mymoney_token")).toBe("dummy-token");
+
+            expect(mockedUseNavigate).toBeCalledWith("/dashboard");
         });
 
     });
 
 });
+
+
+jest.mock("react", () => ({
+    ...jest.requireActual("react"),
+}));
+
+
+const mockedUseNavigate = jest.fn();
+jest.mock("react-router", () => ({
+    useNavigate: () => mockedUseNavigate,
+}));
+
+
+jest.mock("../../api/login");

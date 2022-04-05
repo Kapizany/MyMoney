@@ -5,37 +5,59 @@ import { BackgroundScreen } from ".";
 
 describe("Test BackgroundScreen component", () => {
 
-    it("renders div", () => {
-        const { container } = render(
-            <BackgroundScreen>
-                <button name="fake-button">
-                    Fake button
-                </button>
-            </BackgroundScreen>
-        );
-        expect(container.querySelector(`div[id="background-screen-component"]`)).toBeVisible();
-    });
+    describe("renders correctly", () => {
 
-    it("renders children correctly", () => {
-        render(
-            <BackgroundScreen>
-                <button name="fake-button">
-                    Fake button
-                </button>
-            </BackgroundScreen>
-        );
-        expect(screen.getByRole("button", { "name": "Fake button" })).toBeVisible();
-    });
+        it("renders component's div", () => {
+            const { container } = render(
+                <BackgroundScreen>
+                    <button name="dummy-button">
+                        Dummy button
+                    </button>
+                </BackgroundScreen>
+            );
+            expect(container.querySelector(`div[id="background-screen-component"]`)).toBeVisible();
+        });
 
-    it("renders with background prop", () => {
-        const { container } = render(
-            <BackgroundScreen bg="#000">
-                <button name="fake-button">
-                    Fake button
-                </button>
-            </BackgroundScreen>
-        );
-        expect(container.querySelector(`div[id="background-screen-component"]`)).toHaveStyle("background: #000");
+        it("renders component's children", () => {
+            render(
+                <BackgroundScreen>
+                    <button name="dummy-button">
+                        Dummy button
+                    </button>
+                </BackgroundScreen>
+            );
+            expect(screen.getByRole("button", { "name": "Dummy button" })).toBeVisible();
+        });
+
+        it("renders with default props", () => {
+            const { container } = render(
+                <BackgroundScreen>
+                    <button name="dummy-button">
+                        Dummy button
+                    </button>
+                </BackgroundScreen>
+            );
+            expect(container.querySelector(`div[id="background-screen-component"]`)).toHaveStyle("align-items: center");
+            expect(container.querySelector(`div[id="background-screen-component"]`)).toHaveStyle("justify-content: center");
+        });
+
+        it("renders with given props", () => {
+            const { container } = render(
+                <BackgroundScreen
+                    alignItems="normal"
+                    justifyContent="flex-start"
+                    bg="#000"
+                >
+                    <button name="dummy-button">
+                        Dummy button
+                    </button>
+                </BackgroundScreen>
+            );
+            expect(container.querySelector(`div[id="background-screen-component"]`)).toHaveStyle("align-items: normal");
+            expect(container.querySelector(`div[id="background-screen-component"]`)).toHaveStyle("justify-content: flex-start");
+            expect(container.querySelector(`div[id="background-screen-component"]`)).toHaveStyle("background: #000");
+        });
+
     });
 
 });
