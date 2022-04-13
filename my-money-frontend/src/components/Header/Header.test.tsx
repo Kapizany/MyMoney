@@ -12,7 +12,7 @@ describe("Test Header component", () => {
             expect(screen.getByRole("heading", { name: "MyMoney" })).toBeVisible();
         });
 
-        describe("renders LanguageDropdownMenu correctly", () => {
+        describe("renders LanguageDropdownMenu", () => {
 
             it("renders English option", () => {
                 render(<Header />);
@@ -31,7 +31,7 @@ describe("Test Header component", () => {
 
         });
 
-        describe("renders AccountDropdownMenu correctly", () => {
+        describe("renders AccountDropdownMenu", () => {
 
             it("renders Manage account option", () => {
                 render(<Header />);

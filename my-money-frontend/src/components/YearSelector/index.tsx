@@ -9,8 +9,17 @@ export function YearSelector({
   setLoading,
 }: YearSelectorProps) {
   return (
-    <Flex h="5%" alignItems="center" justifyContent="center" bgColor="#eeeef2">
-      <Flex mr="0.25rem" fontWeight="bold" color="#1f2029">
+    <Flex
+      h="5%"
+      alignItems="center"
+      justifyContent="center"
+      bgColor="#eeeef2"
+    >
+      <Flex
+        mr="0.25rem"
+        fontWeight="bold"
+        color="#1f2029"
+      >
         Year:
       </Flex>
       <Select
@@ -25,7 +34,10 @@ export function YearSelector({
       >
         {years.map((yearOption: string) => {
           return (
-            <option key={yearOption} value={yearOption}>
+            <option
+              key={yearOption}
+              value={yearOption}
+            >
               {yearOption}
             </option>
           );

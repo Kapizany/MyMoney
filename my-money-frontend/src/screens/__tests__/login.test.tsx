@@ -4,6 +4,15 @@ import { Login } from "../login";
 import { loginAPI } from "../../api/login";
 
 
+const mockedUseNavigate = jest.fn();
+jest.mock("react-router", () => ({
+    useNavigate: () => mockedUseNavigate,
+}));
+
+
+jest.mock("../../api/login");
+
+
 describe("Test Login page", () => {
 
     describe("renders correctly", () => {
@@ -69,17 +78,3 @@ describe("Test Login page", () => {
     });
 
 });
-
-
-jest.mock("react", () => ({
-    ...jest.requireActual("react"),
-}));
-
-
-const mockedUseNavigate = jest.fn();
-jest.mock("react-router", () => ({
-    useNavigate: () => mockedUseNavigate,
-}));
-
-
-jest.mock("../../api/login");

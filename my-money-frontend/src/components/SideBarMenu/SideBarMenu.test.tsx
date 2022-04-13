@@ -3,6 +3,12 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { SideBarMenu } from ".";
 
 
+const mockedUseNavigate = jest.fn();
+jest.mock("react-router-dom", () => ({
+    useNavigate: () => mockedUseNavigate,
+}));
+
+
 describe("Test SideBarMenu component", () => {
 
     describe("renders correctly", () => {
@@ -53,12 +59,6 @@ describe("Test SideBarMenu component", () => {
     });
 
 });
-
-
-const mockedUseNavigate = jest.fn();
-jest.mock("react-router-dom", () => ({
-    useNavigate: () => mockedUseNavigate,
-}));
 
 
 function renderSideBarMenuBeforeEach() {

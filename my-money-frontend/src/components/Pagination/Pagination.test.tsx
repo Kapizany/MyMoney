@@ -11,10 +11,13 @@ configure({ adapter: new Adapter() });
 
 describe("Test Pagination component", () => {
 
+    const pageSizeOptions = [5, 10, 20, 50];
+
     describe("renders correctly", () => {
 
         it("renders buttons and page numbers", () => {
             renderPagination(5, 1, 1);
+
             expect(screen.getByRole("button", { name: "<<" })).toBeVisible();
             expect(screen.getByRole("button", { name: "<" })).toBeVisible();
             expect(screen.getByText("Page 1/1")).toBeVisible();
@@ -24,11 +27,12 @@ describe("Test Pagination component", () => {
 
         it("renders Page size dropdown menu", () => {
             renderPagination(5, 1, 1);
+
             expect(screen.getByText(/Page size: 5/)).toBeVisible();
-            expect(screen.getByText("5")).toBeInTheDocument();
-            expect(screen.getByText("10")).toBeInTheDocument();
-            expect(screen.getByText("20")).toBeInTheDocument();
-            expect(screen.getByText("50")).toBeInTheDocument();
+
+            for (let option of pageSizeOptions) {
+                expect(screen.getByText(option)).toBeInTheDocument();
+            }
         });
 
     });
@@ -131,13 +135,12 @@ describe("Test Pagination component", () => {
 
         });
 
-        describe("test of Page size options", () => {
+        describe("test the functionality of Page size dropdown menu", () => {
 
-            const options = [5, 10, 20, 50];
-
-            for (let pageSizeOption of options) {
-                whenOptionIsAlreadySelected(options, pageSizeOption);
-                whenOptionIsNotSelected(options, pageSizeOption);
+            for (let index in pageSizeOptions) {
+                const optionIndex = Number(index);
+                whenOptionIsAlreadySelected(pageSizeOptions, optionIndex);
+                whenOptionIsNotSelected(pageSizeOptions, optionIndex);
             }
 
         });
@@ -192,11 +195,13 @@ const mountPagination = (
 };
 
 
-function whenOptionIsAlreadySelected(options: number[], pageSizeOption: number) {
-    it(`does not call the functions associated with option ${pageSizeOption} if pageSize is already ${pageSizeOption}`, () => {
-        const wrapper = mountPagination(pageSizeOption, 1, 1);
+function whenOptionIsAlreadySelected(pageSizeOptions: number[], optionIndex: number) {
+    const option = pageSizeOptions[optionIndex];
 
-        wrapper.find(MenuItem).at(options.indexOf(pageSizeOption)).simulate("click");
+    it(`does not call the functions associated with option ${option} if pageSize is already ${option}`, () => {
+        const wrapper = mountPagination(option, 1, 1);
+
+        wrapper.find(MenuItem).at(optionIndex).simulate("click");
 
         expect(wrapper.props().setPageSize).not.toBeCalled();
         expect(wrapper.props().setFirstPage).not.toBeCalled();
@@ -206,14 +211,16 @@ function whenOptionIsAlreadySelected(options: number[], pageSizeOption: number) 
 }
 
 
-function whenOptionIsNotSelected(options: number[], pageSizeOption: number) {
-    it(`calls the functions associated with option ${pageSizeOption} if pageSize differs from ${pageSizeOption}`, () => {
-        // options[(options.indexOf(pageSizeOption) + 1) % options.length] gives us the next option element
-        const wrapper = mountPagination(options[(options.indexOf(pageSizeOption) + 1) % options.length], 1, 1);
+function whenOptionIsNotSelected(pageSizeOptions: number[], optionIndex: number) {
+    const option = pageSizeOptions[optionIndex];
 
-        wrapper.find(MenuItem).at(options.indexOf(pageSizeOption)).simulate("click");
+    it(`calls the functions associated with option ${option} if pageSize differs from ${option}`, () => {
+        const nextOption = pageSizeOptions[(optionIndex + 1) % pageSizeOptions.length];
+        const wrapper = mountPagination(nextOption, 1, 1);
 
-        expect(wrapper.props().setPageSize).toBeCalledWith(pageSizeOption);
+        wrapper.find(MenuItem).at(optionIndex).simulate("click");
+
+        expect(wrapper.props().setPageSize).toBeCalledWith(option);
         expect(wrapper.props().setFirstPage).toBeCalledTimes(1);
         expect(wrapper.props().setLoadingToTrue).toBeCalledTimes(1);
         expect(wrapper.props().updateData).toBeCalledTimes(1);

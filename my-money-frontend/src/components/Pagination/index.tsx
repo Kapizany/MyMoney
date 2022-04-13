@@ -32,7 +32,6 @@ export const Pagination:React.FC<PaginationProps> = (
       justifyContent="center"
     >
       <Button
-        id="goToFirstPage"
         size="sm"
         mr="0.5rem"
         px="-0.5rem"
