@@ -38,7 +38,7 @@ export const Pagination:React.FC<PaginationProps> = (
         bgColor="gray.50"
         boxShadow="0px 0px 8px 0px rgba(0,0,0,0.4)"
         color="dollar.900"
-        _hover={{bgColor: "dollar.400"}}
+        _hover={{bgColor: "dollar.600"}}
         _focus={{outline: "none"}}
         onClick={() => {
           if (currentPage !== 1) {
@@ -55,7 +55,7 @@ export const Pagination:React.FC<PaginationProps> = (
         bgColor="gray.50"
         boxShadow="0px 0px 8px 0px rgba(0,0,0,0.4)"
         color="dollar.900"
-        _hover={{bgColor: "dollar.400"}}
+        _hover={{bgColor: "dollar.600"}}
         _focus={{outline: "none"}}
         onClick={() => {
           if (currentPage > 1) {
@@ -84,7 +84,7 @@ export const Pagination:React.FC<PaginationProps> = (
         bgColor="gray.50"
         boxShadow="0px 0px 8px 0px rgba(0,0,0,0.4)"
         color="dollar.900"
-        _hover={{bgColor: "dollar.400"}}
+        _hover={{bgColor: "dollar.600"}}
         _focus={{outline: "none"}}
         onClick={() => {
           if (currentPage < lastPage) {
@@ -103,7 +103,7 @@ export const Pagination:React.FC<PaginationProps> = (
         bgColor="gray.50"
         boxShadow="0px 0px 8px 0px rgba(0,0,0,0.4)"
         color="dollar.900"
-        _hover={{bgColor: "dollar.400"}}
+        _hover={{bgColor: "dollar.600"}}
         _focus={{outline: "none"}}
         onClick={() => {
           if (currentPage !== lastPage) {

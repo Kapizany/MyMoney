@@ -9,4 +9,15 @@ export const loginAPI = {
     await api.get("people/get_auth/", {
       headers: { Authorization: `Token ${token}` },
     }),
+
+  createAccount: async (
+    accountData: {
+      email: string,
+      first_name: string,
+      last_name: string,
+      password: string,
+      password2: string,
+    },
+  ) =>
+    await api.post("register/", { ...accountData, "username": accountData.email }),
 };

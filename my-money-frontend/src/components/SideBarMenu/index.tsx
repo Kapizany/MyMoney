@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom"
 
 export const SideBarMenu: React.FC<{selectedPage: string}> = ({selectedPage}) => {
   const hoverStyle = {
-    bgColor: "dollar.400",
+    bgColor: "dollar.600",
     cursor: "pointer",
   };
 
