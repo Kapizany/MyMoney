@@ -125,17 +125,6 @@ Faker = ">=5.4.0"
 tests = ["Django (>=3.0)", "Flask (>=1.0)", "Marshmallow (>=3.9)", "SQLAlchemy (>=1.1.4)", "flask-sqlalchemy (>=2.1)", "mongoengine (>=0.10.1)", "peewee (>=3.7.0)", "pony (>=0.7)", "psycopg2-binary (>=2.8.4)", "pytest"]
 
 [[package]]
-name = "model-bakery"
-version = "1.4.0"
-description = "Smart object creation facility for Django."
-category = "main"
-optional = false
-python-versions = "*"
-
-[package.dependencies]
-django = ">=2.2"
-
-[[package]]
 name = "packaging"
 version = "21.3"
 description = "Core utilities for Python packages"
@@ -267,7 +256,7 @@ python-versions = ">=2"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "50150d387cb66a2b75a0bdb110b0df389783a7ccfdc3bd7576dbf88cc61f11a8"
+content-hash = "3d67da8333fc1b66fb5aaee591aeddaa40d05326a70aa2aa89447f230bedea20"
 
 [metadata.files]
 asgiref = [
@@ -327,10 +316,6 @@ iniconfig = [
 mixer = [
     {file = "mixer-7.2.0-py3-none-any.whl", hash = "sha256:d5d6466bd6227f9d3c5002b443f01ca13f4cd8dc3bd5f7715f0788dc9632975f"},
     {file = "mixer-7.2.0.tar.gz", hash = "sha256:7cc84aecea63144a12dd295ee6d407cd02298d1698e4794193e0776568788a78"},
-]
-model-bakery = [
-    {file = "model_bakery-1.4.0-py2.py3-none-any.whl", hash = "sha256:a89befaae667380f5e2352981d45fed36747941f5c3e9dffa962fc6ba8d661d1"},
-    {file = "model_bakery-1.4.0.tar.gz", hash = "sha256:c29fb821c81cda2c37dfbdcb1dd2218cda179ecb96c6edb6cd9cdaa146706d92"},
 ]
 packaging = [
     {file = "packaging-21.3-py3-none-any.whl", hash = "sha256:ef103e05f519cdc783ae24ea4e2e0f508a9c99b2d4969652eed6a2e1ea5bd522"},
