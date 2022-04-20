@@ -16,25 +16,24 @@ import { TransactionModalProps } from "../../interfaces/transactionModal";
 import { Input } from "../Input";
 
 
-export const TransactionModal:React.FC<TransactionModalProps & ModalProps> = (
-    {
-      newTransaction,
-      transactionId,
-      transactionCategory,
-      setTransactionCategory,
-      transactionDate,
-      setTransactionDate,
-      transactionDescription,
-      setTransactionDescription,
-      transactionValue,
-      setTransactionValue,
-      resetModalInputs,
-      setLoadingToTrue,
-      updateTableData,
-      setLastPageOnNewTransaction,
-      isOpen,
-      onClose,
-    }) => {
+export function TransactionModal({
+    newTransaction,
+    transactionId,
+    transactionCategory,
+    setTransactionCategory,
+    transactionDate,
+    setTransactionDate,
+    transactionDescription,
+    setTransactionDescription,
+    transactionValue,
+    setTransactionValue,
+    resetModalInputs,
+    setLoadingToTrue,
+    updateTableData,
+    setLastPageOnNewTransaction,
+    isOpen,
+    onClose,
+  }: TransactionModalProps & ModalProps) {
   const tokenLocalStorage = localStorage.getItem("mymoney_token");
 
   return (
@@ -154,4 +153,4 @@ export const TransactionModal:React.FC<TransactionModalProps & ModalProps> = (
       </Modal>
     </>
   );
-};
+}

@@ -30,6 +30,18 @@ class PersonViewSet(viewsets.ModelViewSet):
         }
         return Response(content)
 
+    @action(detail=False, methods=["get"], name="Get username")
+    def get_username(self, format=None):
+        queryset= self.get_queryset().filter(email=self.request.user.email)
+        username = [person.username for person in queryset][0]
+        return Response(username)
+
+    @action(detail=False, methods=["get"], name="Get full name")
+    def get_full_name(self, format=None):
+        queryset = self.get_queryset().filter(email=self.request.user.email)
+        full_name = [person.full_name for person in queryset][0]
+        return Response(full_name)
+
 
 class RegisterView(generics.CreateAPIView):
     queryset = Person.objects.all()

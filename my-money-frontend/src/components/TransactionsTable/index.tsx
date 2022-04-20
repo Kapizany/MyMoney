@@ -1,3 +1,5 @@
+import { useState } from "react";
+import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import {
   Button,
   Flex,
@@ -11,28 +13,24 @@ import {
   Tr,
   useDisclosure,
 } from "@chakra-ui/react";
-import { useState } from "react";
-import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import { TransactionModal } from "../TransactionModal";
 import { TransactionsTableProps } from "../../interfaces/transactionTable";
 import { getWeekdayFromDate } from "../../utils/getWeekdayFromData";
 
 
-export const TransactionsTable:React.FC<TransactionsTableProps> = (
-    {
-      data,
-      deleteTransaction,
-      setLoadingToTrue,
-      updateTableData,
-      setLastPageOnNewTransaction,
-    },
-  ) => {
+export function TransactionsTable({
+    data,
+    deleteTransaction,
+    setLoadingToTrue,
+    updateTableData,
+    setLastPageOnNewTransaction,
+  }: TransactionsTableProps) {
+    const [newTransaction, setNewTransaction] = useState(true);
   const [transactionId, setTransactionId] = useState(-1);
   const [transactionCategory, setTransactionCategory] = useState("");
   const [transactionDate, setTransactionDate] = useState("");
   const [transactionDescription, setTransactionDescription] = useState("");
   const [transactionValue, setTransactionValue] = useState<number|string>("");
-  const [newTransaction, setNewTransaction] = useState(true);
 
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -178,4 +176,4 @@ export const TransactionsTable:React.FC<TransactionsTableProps> = (
       </Tbody>
     </Table>
   );
-};
+}

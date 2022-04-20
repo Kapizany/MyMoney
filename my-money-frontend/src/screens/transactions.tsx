@@ -1,8 +1,9 @@
+import { useState } from "react";
 import {
   Flex,
   Heading,
 } from "@chakra-ui/react";
-import { useState } from "react";
+import { peopleAPI } from "../api/people";
 import { transactionsAPI } from "../api/transactions";
 import { BackgroundScreen } from "../components/BackgroundScreen";
 import { Header } from "../components/Header";
@@ -14,45 +15,67 @@ import { TransactionsTableData } from "../interfaces/transactionsTableData";
 
 
 export function Transactions(
-    {selectedPage, setSelectedPage}: SelectedPageProps) {
+    { selectedPage, setSelectedPage }: SelectedPageProps) {
   setSelectedPage("transactions");
 
+  const [loading, setLoading] = useState(true);
+  const [username, setUsername] = useState("");
+  const [fullName, setFullName] = useState("");
   const [pageSize, setPageSize] = useState(10);
-
   const [tableData, setTableData] = useState<TransactionsTableData>({
     data: {
       count: 0,
       page: 1,
       results: [],
     },
-    loading: true,
   });
 
   const tokenLocalStorage = localStorage.getItem("mymoney_token");
 
-  function setLoadingToTrue() {
-    tableData.loading = true;
+  if (loading) {
+    loadUsername();
+    loadFullName();
+    updateTableData();
+    setLoading(false);
+  }
+
+  const lastPage: number = Math.ceil(tableData.data.count / pageSize);
+
+  function loadUsername() {
+    peopleAPI.getUsername(tokenLocalStorage ? tokenLocalStorage : "")
+    .then((response) => {
+      setUsername(response.data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  }
+
+  function loadFullName() {
+    peopleAPI.getFullName(tokenLocalStorage ? tokenLocalStorage : "")
+    .then((response) => {
+      setFullName(response.data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
   }
 
   function updateTableData() {
     transactionsAPI.getTransactionsList(
       tokenLocalStorage ? tokenLocalStorage : "",
       tableData.data.page,
-      pageSize)
+      pageSize,
+    )
     .then((response) => {
-      if (tableData.loading) {
-        setTableData({
-          data: response.data,
-          loading: false,
-        });
-      }
+      setTableData({
+        data: response.data,
+      });
     })
-    .catch((error) => console.log(error));
+    .catch((error) => {
+      console.log(error);
+    });
   }
-
-  updateTableData();
-
-  const lastPage: number = Math.ceil(tableData.data.count / pageSize);
 
   function setFirstPage() {
     tableData.data.page = 1;
@@ -92,10 +115,14 @@ export function Transactions(
     .catch((error) => console.log(error));
   }
 
+  function setLoadingToTrue() {
+    setLoading(true);
+  }
+
   return (
     <BackgroundScreen alignItems="normal" justifyContent="flex-start">
-      <Header />
-      <SideBarMenu selectedPage={selectedPage} />
+      <Header username={username} />
+      <SideBarMenu selectedPage={selectedPage} fullName={fullName} />
       <Flex
         w="83vw"
         mt="6vh"

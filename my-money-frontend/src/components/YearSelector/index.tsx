@@ -3,11 +3,11 @@ import { YearSelectorProps } from "../../interfaces/yearSelector";
 
 
 export function YearSelector({
-  years,
-  year,
-  setYear,
-  setLoading,
-}: YearSelectorProps) {
+    years,
+    year,
+    setYear,
+    setLoading,
+  }: YearSelectorProps) {
   return (
     <Flex
       h="5%"

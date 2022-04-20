@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import {
   Avatar,
   Flex,
@@ -11,9 +12,10 @@ import {
 import { FaAngleDown } from "react-icons/fa";
 import ReactCountryFlag from "react-country-flag";
 import { Logo } from "../Logo";
+import { HeaderProps } from "../../interfaces/header";
 
 
-export const Header = () => {
+export function Header({ username }: HeaderProps) {
   return (
     <Flex
       position="fixed"
@@ -24,7 +26,7 @@ export const Header = () => {
       bgColor="gray.700"
       justifyContent="space-between"
       px="1rem"
-      boxShadow="0px 7px 5px -4px rgba(0,0,0,0.4)" // "rgba(0, 0, 0, 0.1) 0px 0px 0px 1px,rgba(0, 0, 0, 0.2) 0px 3px 5px,rgba(0, 0, 0, 0.4) 0px 5px 7px"
+      boxShadow="0px 7px 5px -4px rgba(0,0,0,0.4)"
     >
       <Logo
         stack="horizontal"
@@ -38,14 +40,15 @@ export const Header = () => {
         <Text px="0.5rem">English</Text>
         <LanguageDropdownMenu />
         <Avatar size="sm" ml="3rem" />
-        <Text mx="0.5rem">Name</Text>
+        <Text mx="0.5rem">{username}</Text>
         <AccountDropdownMenu />
       </Flex>
     </Flex>
   );
-};
+}
 
-const LanguageDropdownMenu = () => {
+
+function LanguageDropdownMenu() {
   return (
     <Menu>
       <MenuButton>
@@ -63,9 +66,17 @@ const LanguageDropdownMenu = () => {
       </MenuList>
     </Menu>
   );
-};
+}
 
-const AccountDropdownMenu = () => {
+
+function AccountDropdownMenu() {
+  const history = useNavigate();
+
+  const handleSignOut = () => {
+    localStorage.removeItem("mymoney_token");
+    history("/login");
+  };
+
   return (
     <Menu>
       <MenuButton>
@@ -75,8 +86,12 @@ const AccountDropdownMenu = () => {
         <MenuItem>Manage account</MenuItem>
         <MenuItem>Settings</MenuItem>
         <MenuItem>Help</MenuItem>
-        <MenuItem>Sign out</MenuItem>
+        <MenuItem
+          onClick={handleSignOut}
+        >
+          Sign out
+        </MenuItem>
       </MenuList>
     </Menu>
   );
-};
+}

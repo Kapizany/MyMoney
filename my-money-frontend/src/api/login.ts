@@ -12,6 +12,7 @@ export const loginAPI = {
 
   createAccount: async (
     accountData: {
+      username: string,
       email: string,
       first_name: string,
       last_name: string,
@@ -19,5 +20,5 @@ export const loginAPI = {
       password2: string,
     },
   ) =>
-    await api.post("register/", { ...accountData, "username": accountData.email }),
+    await api.post("register/", accountData),
 };

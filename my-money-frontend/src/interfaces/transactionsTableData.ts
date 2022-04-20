@@ -7,5 +7,4 @@ export interface TransactionsTableData {
     page: number;
     results: Transaction[];
   };
-  loading: boolean;
 };

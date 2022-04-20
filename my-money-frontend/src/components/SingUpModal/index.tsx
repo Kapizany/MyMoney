@@ -1,21 +1,39 @@
-import { Button, Flex, FormControl, FormErrorMessage, FormLabel, Modal,
-  ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader,
-  ModalOverlay, ModalProps, Stack } from "@chakra-ui/react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import {
+  Button,
+  Flex,
+  FormControl,
+  FormErrorMessage,
+  FormLabel,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  ModalProps,
+  Stack,
+} from "@chakra-ui/react";
 import { loginAPI } from "../../api/login";
 import { Input } from "../Input";
 
 
-export const SingUpModal:React.FC<ModalProps> = ({ isOpen, onClose }) => {
+export function SingUpModal({ isOpen, onClose }: ModalProps) {
+  const [errorResponseData, setErrorResponseData] = useState<any>({});
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [errorResponseData, setErrorResponseData] = useState<any>({});
+
+  const history = useNavigate();
 
   function handleSignUp() {
     loginAPI.createAccount({
+      "username": username,
       "email": email,
       "first_name": firstName,
       "last_name": lastName,
@@ -26,6 +44,7 @@ export const SingUpModal:React.FC<ModalProps> = ({ isOpen, onClose }) => {
       (_) => {
         onClose();
         resetSignUpModalInputs();
+        handleNewAccountSignIn(email, password);
       }
     )
     .catch(
@@ -37,11 +56,33 @@ export const SingUpModal:React.FC<ModalProps> = ({ isOpen, onClose }) => {
 
   function resetSignUpModalInputs() {
     setErrorResponseData({});
+    setUsername("");
     setEmail("");
     setFirstName("");
     setLastName("");
     setPassword("");
     setConfirmPassword("");
+  }
+
+  function handleNewAccountSignIn(email: string, password: string) {
+    loginAPI.createToken({
+      "username": email,
+      "password": password,
+    })
+    .then((response) => {
+      localStorage.setItem("mymoney_token", response.data.token);
+      history("/dashboard");
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  }
+
+  function handleInputKeyDown(event: React.KeyboardEvent) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      document.getElementById("createAccountButton")?.click();
+    }
   }
 
   return (
@@ -66,6 +107,26 @@ export const SingUpModal:React.FC<ModalProps> = ({ isOpen, onClose }) => {
           />
           <ModalBody>
             <Stack>
+              <FormControl isInvalid={errorResponseData.username}>
+                <FormLabel htmlFor="username" height="0px">Username</FormLabel>
+                <Input
+                  name="username"
+                  type="text"
+                  placeholder="Username"
+                  value={username}
+                  onChange={(event) => {
+                    setUsername(event.target.value);
+                  }}
+                  onKeyDown={handleInputKeyDown}
+                />
+                {errorResponseData.username ? errorResponseData.username.map((errorMessage: string) => {
+                  return (
+                    <FormErrorMessage key={errorResponseData.username.indexOf(errorMessage)}>
+                      {errorMessage}
+                    </FormErrorMessage>
+                  );
+                }) : null}
+              </FormControl>
               <FormControl isInvalid={errorResponseData.email}>
                 <FormLabel htmlFor="email" height="0px">Email address</FormLabel>
                 <Input
@@ -76,6 +137,7 @@ export const SingUpModal:React.FC<ModalProps> = ({ isOpen, onClose }) => {
                   onChange={(event) => {
                     setEmail(event.target.value);
                   }}
+                  onKeyDown={handleInputKeyDown}
                 />
                 {errorResponseData.email ? errorResponseData.email.map((errorMessage: string) => {
                   return (
@@ -97,6 +159,7 @@ export const SingUpModal:React.FC<ModalProps> = ({ isOpen, onClose }) => {
                     onChange={(event) => {
                       setFirstName(event.target.value);
                     }}
+                    onKeyDown={handleInputKeyDown}
                   />
                   {errorResponseData.first_name ? errorResponseData.first_name.map((errorMessage: string) => {
                     return (
@@ -118,6 +181,7 @@ export const SingUpModal:React.FC<ModalProps> = ({ isOpen, onClose }) => {
                     onChange={(event) => {
                       setLastName(event.target.value);
                     }}
+                    onKeyDown={handleInputKeyDown}
                   />
                   {errorResponseData.last_name ? errorResponseData.last_name.map((errorMessage: string) => {
                     return (
@@ -138,6 +202,7 @@ export const SingUpModal:React.FC<ModalProps> = ({ isOpen, onClose }) => {
                   onChange={(event) => {
                     setPassword(event.target.value);
                   }}
+                  onKeyDown={handleInputKeyDown}
                 />
                 {errorResponseData.password ? errorResponseData.password.map((errorMessage: string) => {
                   return (
@@ -157,6 +222,7 @@ export const SingUpModal:React.FC<ModalProps> = ({ isOpen, onClose }) => {
                   onChange={(event) => {
                     setConfirmPassword(event.target.value);
                   }}
+                  onKeyDown={handleInputKeyDown}
                 />
                 {errorResponseData.password2 ? errorResponseData.password2.map((errorMessage: string) => {
                   return (
@@ -170,6 +236,7 @@ export const SingUpModal:React.FC<ModalProps> = ({ isOpen, onClose }) => {
           </ModalBody>
           <ModalFooter>
             <Button
+              id="createAccountButton"
               bgColor="dollar.500"
               color="gray.50"
               _hover={{bgColor: "dollar.600"}}
@@ -183,4 +250,4 @@ export const SingUpModal:React.FC<ModalProps> = ({ isOpen, onClose }) => {
       </Modal>
     </>
   );
-};
+}

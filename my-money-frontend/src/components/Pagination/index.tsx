@@ -1,3 +1,4 @@
+import { FaAngleDown } from "react-icons/fa";
 import {
   Button,
   Flex,
@@ -7,23 +8,21 @@ import {
   MenuItem,
   MenuList,
 } from "@chakra-ui/react";
-import { FaAngleDown } from "react-icons/fa";
 import { PaginationProps } from "../../interfaces/pagination";
 
 
-export const Pagination:React.FC<PaginationProps> = (
-    {
-      pageSize,
-      setPageSize,
-      setFirstPage,
-      decreasePageByOne,
-      currentPage,
-      lastPage,
-      increasePageByOne,
-      setLastPage,
-      setLoadingToTrue,
-      updateData,
-    }) => {
+export function Pagination({
+    pageSize,
+    setPageSize,
+    setFirstPage,
+    decreasePageByOne,
+    currentPage,
+    lastPage,
+    increasePageByOne,
+    setLastPage,
+    setLoadingToTrue,
+    updateData,
+  }: PaginationProps) {
   return (
     <Flex
       mt="1rem"
@@ -186,4 +185,4 @@ export const Pagination:React.FC<PaginationProps> = (
       </Menu>
     </Flex>
   );
-};
+}

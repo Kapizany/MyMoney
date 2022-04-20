@@ -98,12 +98,12 @@ export function CurrentMonthChart({ series }: Props) {
 
 
 export function ExpensesByCategoryChart({
-  series,
-  years,
-  year,
-  setYear,
-  setLoading,
-}: Props & YearSelectorProps) {
+    series,
+    years,
+    year,
+    setYear,
+    setLoading,
+  }: Props & YearSelectorProps) {
   const options: ApexOptions = {
     chart: {
       id: "expenses-by-category",
@@ -172,12 +172,12 @@ export function ExpensesByCategoryChart({
 
 
 export function CreditAndDebitChart({
-  series,
-  years,
-  year,
-  setYear,
-  setLoading,
-}: Props & YearSelectorProps) {
+    series,
+    years,
+    year,
+    setYear,
+    setLoading,
+  }: Props & YearSelectorProps) {
   const options: ApexOptions = {
     chart: {
       id: "credit-and-debit",
@@ -248,12 +248,12 @@ export function CreditAndDebitChart({
 
 
 export function CumulativeBalanceChart({
-  series,
-  years,
-  year,
-  setYear,
-  setLoading,
-}: Props & YearSelectorProps) {
+    series,
+    years,
+    year,
+    setYear,
+    setLoading,
+  }: Props & YearSelectorProps) {
   const options: ApexOptions = {
     chart: {
       id: "cumulative-balance",
