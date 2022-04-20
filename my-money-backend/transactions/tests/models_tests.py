@@ -1,80 +1,86 @@
-from datetime import datetime, timezone
 from decimal import Decimal
+from datetime import datetime, timezone
 
 
 ### default_user start ###
 def test_set_check_default_username(default_user):
-    assert default_user.username == ""
+    assert default_user["person"].username == "default_user"
 
 
 def test_set_check_default_email(default_user):
-    assert default_user.email == ""
+    assert default_user["person"].email == "default_user@exampĺe.com"
 
 
 def test_set_check_default_password(default_user):
-    assert default_user.password == ""
+    assert default_user["person"].check_password("default_user_password")
 
 
 def test_set_check_default_is_active(default_user):
-    assert default_user.is_active is True
+    assert default_user["person"].is_active is True
 
 
 def test_set_check_default_is_staff(default_user):
-    assert default_user.is_staff is False
+    assert default_user["person"].is_staff is False
 
 
 def test_set_check_default_is_superuser(default_user):
-    assert default_user.is_superuser is False
+    assert default_user["person"].is_superuser is False
 
 
 def test_set_check_default_first_name(default_user):
-    assert default_user.first_name == ""
+    assert default_user["person"].first_name == "default_user_first_name"
 
 
 def test_set_check_default_last_name(default_user):
-    assert default_user.last_name == ""
+    assert default_user["person"].last_name == "default_user_last_name"
 
 
 def test_set_check_default_date_joined(default_user):
-    assert default_user.date_joined.second == datetime.now(tz=timezone.utc).second
+    assert default_user["person"].date_joined.day == datetime.now(tz=timezone.utc).day
+    assert default_user["person"].date_joined.hour == datetime.now(tz=timezone.utc).hour
+    assert default_user["person"].date_joined.minute == datetime.now(tz=timezone.utc).minute
+    assert abs(default_user["person"].date_joined.second - datetime.now(tz=timezone.utc).second) < 3
 ### default_user end ###
 
 
 ### superuser start ###
 def test_set_check_username(superuser):
-    assert superuser.username == "superuser@exampĺe.com"
+    assert superuser["person"].username == "superuser"
 
 
 def test_set_check_email(superuser):
-    assert superuser.email == "superuser@exampĺe.com"
+    assert superuser["person"].email == "superuser@exampĺe.com"
 
 
 def test_set_check_password(superuser):
-    assert superuser.password == "superuser_password"
+    assert superuser["person"].check_password("superuser_password")
 
 
 def test_set_check_is_active(superuser):
-    assert superuser.is_active is True
+    assert superuser["person"].is_active is True
 
 
 def test_set_check_is_staff(superuser):
-    assert superuser.is_staff is True
+    assert superuser["person"].is_staff is True
 
 
 def test_set_check_is_superuser(superuser):
-    assert superuser.is_superuser is True
+    assert superuser["person"].is_superuser is True
 
 
 def test_set_check_first_name(superuser):
-    assert superuser.first_name == "superuser_first_name"
+    assert superuser["person"].first_name == "superuser_first_name"
 
 
 def test_set_check_last_name(superuser):
-    assert superuser.last_name == "superuser_last_name"
+    assert superuser["person"].last_name == "superuser_last_name"
 
 
 def test_set_check_date_joined(superuser):
-    assert superuser.date_joined.second == datetime.now(tz=timezone.utc).second
+    assert superuser["person"].date_joined.day == datetime.now(tz=timezone.utc).day
+    assert superuser["person"].date_joined.hour == datetime.now(tz=timezone.utc).hour
+    assert superuser["person"].date_joined.minute == datetime.now(tz=timezone.utc).minute
+    assert abs(superuser["person"].date_joined.second - datetime.now(tz=timezone.utc).second) < 3
 ### superuser end ###
 
 

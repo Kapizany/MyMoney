@@ -1,4 +1,3 @@
-from rest_framework.test import APIClient
 from decimal import Decimal
 
 
@@ -11,9 +10,7 @@ def test_default_user_get_monthly_values_action_for_current_year(
         superuser_credit_transaction,
         superuser_transaction_year_2000,
     ):
-    client = APIClient()
-    client.force_authenticate(user=default_user)
-    response = client.get(f"/transactions/get_monthly_values/")
+    response = default_user["client"].get(f"/transactions/get_monthly_values/")
     for month in response.data:
         if month == "January":
             debit = default_user_transaction.value
@@ -36,9 +33,7 @@ def test_default_user_get_monthly_values_action_for_a_year_without_transactions(
         superuser_credit_transaction,
         superuser_transaction_year_2000,
     ):
-    client = APIClient()
-    client.force_authenticate(user=default_user)
-    response = client.get(f"/transactions/get_monthly_values/?year=2021")
+    response = default_user["client"].get(f"/transactions/get_monthly_values/?year=2021")
     for month in response.data:
         assert response.data[month]["debit"] == Decimal("0.00")
         assert response.data[month]["credit"] == Decimal("0.00")
@@ -53,9 +48,7 @@ def test_superuser_get_monthly_values_action_for_current_year(
         superuser_credit_transaction,
         superuser_transaction_year_2000,
     ):
-    client = APIClient()
-    client.force_authenticate(user=superuser)
-    response = client.get(f"/transactions/get_monthly_values/")
+    response = superuser["client"].get(f"/transactions/get_monthly_values/")
     for month in response.data:
         if month == "January":
             debit = default_user_transaction.value + superuser_transaction.value
@@ -78,9 +71,7 @@ def test_superuser_get_monthly_values_action_for_a_year_without_transactions(
         superuser_credit_transaction,
         superuser_transaction_year_2000,
     ):
-    client = APIClient()
-    client.force_authenticate(user=superuser)
-    response = client.get(f"/transactions/get_monthly_values/?year=2021")
+    response = superuser["client"].get(f"/transactions/get_monthly_values/?year=2021")
     for month in response.data:
         assert response.data[month]["debit"] == Decimal("0.00")
         assert response.data[month]["credit"] == Decimal("0.00")
@@ -97,9 +88,7 @@ def test_default_user_get_years_action(
         superuser_credit_transaction,
         superuser_transaction_year_2000,
     ):
-    client = APIClient()
-    client.force_authenticate(user=default_user)
-    response = client.get(f"/transactions/get_years/")
+    response = default_user["client"].get(f"/transactions/get_years/")
     assert response.data == ["2022"]
 
 
@@ -108,9 +97,7 @@ def test_superuser_get_years_action(
         default_user_transaction,
         superuser_transaction_year_2000,
     ):
-    client = APIClient()
-    client.force_authenticate(user=superuser)
-    response = client.get(f"/transactions/get_years/")
+    response = superuser["client"].get(f"/transactions/get_years/")
     assert response.data == ["2022", "2000"]
 ### get_years end ###
 
@@ -124,9 +111,7 @@ def test_default_user_get_categories_action_for_current_year(
         superuser_credit_transaction,
         superuser_transaction_year_2000,
     ):
-    client = APIClient()
-    client.force_authenticate(user=default_user)
-    response = client.get(f"/transactions/get_categories/")
+    response = default_user["client"].get(f"/transactions/get_categories/")
     assert response.data["market"] == 0
     assert response.data["bills"] == 0
     assert response.data["other"] == 100
@@ -140,9 +125,7 @@ def test_default_user_get_categories_action_for_a_year_without_transactions(
         superuser_credit_transaction,
         superuser_transaction_year_2000,
     ):
-    client = APIClient()
-    client.force_authenticate(user=default_user)
-    response = client.get(f"/transactions/get_categories/?year=2021")
+    response = default_user["client"].get(f"/transactions/get_categories/?year=2021")
     absolute_sum = Decimal("0.00")
     for value in response.data.values():
         absolute_sum += value
@@ -157,9 +140,7 @@ def test_superuser_get_categories_action_for_current_year(
         superuser_credit_transaction,
         superuser_transaction_year_2000,
     ):
-    client = APIClient()
-    client.force_authenticate(user=superuser)
-    response = client.get(f"/transactions/get_categories/")
+    response = superuser["client"].get(f"/transactions/get_categories/")
     total = default_user_transaction.value + superuser_transaction.value
     market = Decimal(abs(superuser_transaction.value / total) * 100)
     other = Decimal(abs(default_user_transaction.value / total * 100))
