@@ -6,6 +6,9 @@ from rest_framework.response import Response
 from .serializers import PersonSerializer, TransactionSerializer
 from .models import Person, Transaction
 from decimal import Decimal
+from .serializers import RegisterSerializer
+from rest_framework import generics
+from rest_framework.permissions import AllowAny
 
 
 class PersonViewSet(viewsets.ModelViewSet):
@@ -26,6 +29,24 @@ class PersonViewSet(viewsets.ModelViewSet):
             "auth": str(self.request.auth),
         }
         return Response(content)
+
+    @action(detail=False, methods=["get"], name="Get username")
+    def get_username(self, format=None):
+        queryset= self.get_queryset().filter(email=self.request.user.email)
+        username = [person.username for person in queryset][0]
+        return Response(username)
+
+    @action(detail=False, methods=["get"], name="Get full name")
+    def get_full_name(self, format=None):
+        queryset = self.get_queryset().filter(email=self.request.user.email)
+        full_name = [person.full_name for person in queryset][0]
+        return Response(full_name)
+
+
+class RegisterView(generics.CreateAPIView):
+    queryset = Person.objects.all()
+    permission_classes = (AllowAny,)
+    serializer_class = RegisterSerializer
 
 
 class TransactionViewSet(viewsets.ModelViewSet):

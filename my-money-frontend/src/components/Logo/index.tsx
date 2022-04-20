@@ -3,7 +3,7 @@ import { FaDollarSign } from "react-icons/fa";
 import { LogoProps } from "../../interfaces/logo";
 
 
-export const Logo:React.FC<LogoProps> = (props) => {
+export function Logo(props: LogoProps) {
   const logoAlign = props.stack === "horizontal" ? "row" : "column";
   const paddingY = props.stack === "horizontal" ? "5%" : undefined;
 
@@ -14,30 +14,30 @@ export const Logo:React.FC<LogoProps> = (props) => {
       direction={[logoAlign]}
     >
       <Icon
-        boxSize={props.logoImageSize? props.logoImageSize : "3.5rem"}
+        boxSize={props.logoImageSize ? props.logoImageSize : "3.5rem"}
         as={FaDollarSign}
       />
       <Heading
         py={paddingY}
-        fontSize={props.logoMSize? props.logoMSize : "1.4rem"}
+        fontSize={props.logoMSize ? props.logoMSize : "1.4rem"}
       >
         M
         <Box
-          fontSize={props.logoTextSize? props.logoTextSize : "1.2rem"}
+          fontSize={props.logoTextSize ? props.logoTextSize : "1.2rem"}
           display="inline"
-          color={props.logoTextColor? props.logoTextColor : "dollar.900"}
+          color={props.logoTextColor ? props.logoTextColor : "dollar.900"}
         >
           y
         </Box>
         M
         <Box
-          fontSize={props.logoTextSize? props.logoTextSize : "1.2rem"}
+          fontSize={props.logoTextSize ? props.logoTextSize : "1.2rem"}
           display="inline"
-          color={props.logoTextColor? props.logoTextColor : "dollar.900"}
+          color={props.logoTextColor ? props.logoTextColor : "dollar.900"}
         >
           oney
         </Box>
       </Heading>
     </Stack>
   );
-};
+}

@@ -1,5 +1,6 @@
 import { Flex, Heading } from "@chakra-ui/react";
 import { useState } from "react";
+import { peopleAPI } from "../api/people";
 import { transactionsAPI } from "../api/transactions";
 import { BackgroundScreen } from "../components/BackgroundScreen";
 import {
@@ -14,9 +15,12 @@ import { YearSelector } from "../components/YearSelector";
 import { SelectedPageProps } from "../interfaces/selectedPage";
 
 
-export function Dashboard({selectedPage, setSelectedPage}: SelectedPageProps) {
+export function Dashboard({ selectedPage, setSelectedPage }: SelectedPageProps) {
   setSelectedPage("dashboard");
+
   const [loading, setLoading] = useState(true);
+  const [username, setUsername] = useState("");
+  const [fullName, setFullName] = useState("");
   const [years, setYears] = useState<string[]>([]);
   const [year, setYear] = useState(String(new Date().getFullYear()));
   const [CurrentMonthSeries, setCurrentMonthSeries] = useState<any[]>([]);
@@ -26,7 +30,44 @@ export function Dashboard({selectedPage, setSelectedPage}: SelectedPageProps) {
 
   const tokenLocalStorage = localStorage.getItem("mymoney_token");
 
-  function updateData() {
+  if (loading) {
+    loadUsername();
+    loadFullName();
+    loadYears();
+    loadChartsData();
+    setLoading(false);
+  }
+
+  function loadUsername() {
+    peopleAPI.getUsername(tokenLocalStorage ? tokenLocalStorage : "")
+    .then((response) => {
+      setUsername(response.data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  }
+
+  function loadFullName() {
+    peopleAPI.getFullName(tokenLocalStorage ? tokenLocalStorage : "")
+    .then((response) => {
+      setFullName(response.data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  }
+
+  function loadYears() {
+    if (years.length === 0) {
+      transactionsAPI.getYears(
+        tokenLocalStorage ? tokenLocalStorage : "")
+      .then((response) => setYears(response.data))
+      .catch((error) => console.log(error));
+    }
+  }
+
+  function loadChartsData() {
     transactionsAPI.getMonthlyValues(
       tokenLocalStorage ? tokenLocalStorage : "",
       year)
@@ -90,25 +131,12 @@ export function Dashboard({selectedPage, setSelectedPage}: SelectedPageProps) {
       setExpensesByCategorySeries(Object.values(response.data));
     })
     .catch((error) => console.log(error));
-
-    setLoading(false);
-  }
-
-  if (loading) {
-    if (years.length === 0) {
-      transactionsAPI.getYears(
-        tokenLocalStorage ? tokenLocalStorage : "")
-      .then((response) => setYears(response.data))
-      .catch((error) => console.log(error));
-    }
-
-    updateData();
   }
 
   return (
     <BackgroundScreen alignItems="normal" justifyContent="flex-start">
-      <Header />
-      <SideBarMenu selectedPage={selectedPage}/>
+      <Header username={username ? username : ""} />
+      <SideBarMenu selectedPage={selectedPage} fullName={fullName} />
       <Flex
         w="83vw"
         h="fit-content"

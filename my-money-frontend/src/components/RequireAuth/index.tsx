@@ -3,7 +3,7 @@ import { Navigate, Outlet } from "react-router-dom";
 import { loginAPI } from "../../api/login";
 
 
-export function RequireAuth(): React.ReactElement {
+export function RequireAuth() {
   const [authState, setAuthState] = useState({
     loading: true,
     isAuthorized: false,
@@ -17,22 +17,21 @@ export function RequireAuth(): React.ReactElement {
   }
 
   authState.loading &&
-    loginAPI
-      .validateToken(tokenLocalStorage)
-      .then((response) => {
-        setAuthState({
-          loading: false,
-          isAuthorized: true,
-          userData: response.data,
-        });
-      })
-      .catch(() => {
-        setAuthState({
-          loading: false,
-          isAuthorized: false,
-          userData: {},
-        });
+    loginAPI.validateToken(tokenLocalStorage)
+    .then((response) => {
+      setAuthState({
+        loading: false,
+        isAuthorized: true,
+        userData: response.data,
       });
+    })
+    .catch(() => {
+      setAuthState({
+        loading: false,
+        isAuthorized: false,
+        userData: {},
+      });
+    });
 
   return authState.isAuthorized ? (
     <Outlet />

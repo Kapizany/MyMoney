@@ -1,3 +1,4 @@
+import { FaAngleDown } from "react-icons/fa";
 import {
   Button,
   Flex,
@@ -7,23 +8,21 @@ import {
   MenuItem,
   MenuList,
 } from "@chakra-ui/react";
-import { FaAngleDown } from "react-icons/fa";
 import { PaginationProps } from "../../interfaces/pagination";
 
 
-export const Pagination:React.FC<PaginationProps> = (
-    {
-      pageSize,
-      setPageSize,
-      setFirstPage,
-      decreasePageByOne,
-      currentPage,
-      lastPage,
-      increasePageByOne,
-      setLastPage,
-      setLoadingToTrue,
-      updateData,
-    }) => {
+export function Pagination({
+    pageSize,
+    setPageSize,
+    setFirstPage,
+    decreasePageByOne,
+    currentPage,
+    lastPage,
+    increasePageByOne,
+    setLastPage,
+    setLoadingToTrue,
+    updateData,
+  }: PaginationProps) {
   return (
     <Flex
       mt="1rem"
@@ -38,7 +37,7 @@ export const Pagination:React.FC<PaginationProps> = (
         bgColor="gray.50"
         boxShadow="0px 0px 8px 0px rgba(0,0,0,0.4)"
         color="dollar.900"
-        _hover={{bgColor: "dollar.400"}}
+        _hover={{bgColor: "dollar.600"}}
         _focus={{outline: "none"}}
         onClick={() => {
           if (currentPage !== 1) {
@@ -55,7 +54,7 @@ export const Pagination:React.FC<PaginationProps> = (
         bgColor="gray.50"
         boxShadow="0px 0px 8px 0px rgba(0,0,0,0.4)"
         color="dollar.900"
-        _hover={{bgColor: "dollar.400"}}
+        _hover={{bgColor: "dollar.600"}}
         _focus={{outline: "none"}}
         onClick={() => {
           if (currentPage > 1) {
@@ -84,7 +83,7 @@ export const Pagination:React.FC<PaginationProps> = (
         bgColor="gray.50"
         boxShadow="0px 0px 8px 0px rgba(0,0,0,0.4)"
         color="dollar.900"
-        _hover={{bgColor: "dollar.400"}}
+        _hover={{bgColor: "dollar.600"}}
         _focus={{outline: "none"}}
         onClick={() => {
           if (currentPage < lastPage) {
@@ -103,7 +102,7 @@ export const Pagination:React.FC<PaginationProps> = (
         bgColor="gray.50"
         boxShadow="0px 0px 8px 0px rgba(0,0,0,0.4)"
         color="dollar.900"
-        _hover={{bgColor: "dollar.400"}}
+        _hover={{bgColor: "dollar.600"}}
         _focus={{outline: "none"}}
         onClick={() => {
           if (currentPage !== lastPage) {
@@ -186,4 +185,4 @@ export const Pagination:React.FC<PaginationProps> = (
       </Menu>
     </Flex>
   );
-};
+}

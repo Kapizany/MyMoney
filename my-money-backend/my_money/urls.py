@@ -17,7 +17,8 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework.authtoken import views
 from rest_framework import routers
-from transactions.views import PersonViewSet, TransactionViewSet
+from transactions.views import PersonViewSet, RegisterView, TransactionViewSet
+
 
 router = routers.DefaultRouter()
 router.register(r'people', PersonViewSet, basename='People')
@@ -28,4 +29,5 @@ urlpatterns = [
     path('', include(router.urls)),
     path('api-token-auth/', views.obtain_auth_token), # API create token endpoint
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    path('register/', RegisterView.as_view(), name='auth_register'), # API register person endpoint
 ]

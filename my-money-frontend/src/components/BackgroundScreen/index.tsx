@@ -3,8 +3,8 @@ import { BackgroundScreenProps } from "../../interfaces/backgroundScreen";
 import { theme } from "../../styles/theme";
 
 
-export const BackgroundScreen:React.FC<BackgroundScreenProps> = (
-    {children, alignItems, justifyContent, bg}) => {
+export function BackgroundScreen(
+    { children, alignItems, justifyContent, bg }: BackgroundScreenProps) {
   return (
     <ChakraProvider theme={theme}>
       <Flex
@@ -18,4 +18,4 @@ export const BackgroundScreen:React.FC<BackgroundScreenProps> = (
       </Flex>
     </ChakraProvider>
   );
-};
+}

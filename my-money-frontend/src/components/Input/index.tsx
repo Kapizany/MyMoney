@@ -1,5 +1,5 @@
 import { FormControl, Input as ChakraInput } from "@chakra-ui/react";
-import { InputProps } from "../../interfaces/login";
+import { InputProps } from "../../interfaces/input";
 
 
 export function Input({ name, placeholder, label, ...rest }: InputProps) {
