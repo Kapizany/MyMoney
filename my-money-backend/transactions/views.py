@@ -102,7 +102,7 @@ class TransactionViewSet(viewsets.ModelViewSet):
         return Response(results)
 
     @action(detail=False, methods=["get"],
-            name="Get all years in which there are transactions")
+            name="Get current year and those in which there are transactions")
     def get_years(self, request):
         transactions = self.get_queryset()
 
@@ -111,6 +111,10 @@ class TransactionViewSet(viewsets.ModelViewSet):
         for transaction in transactions:
             if str(transaction.date.year) not in years:
                 years.append(str(transaction.date.year))
+
+        current_year = str(date.today().year)
+        if current_year not in years:
+            years.append(current_year)
 
         years.sort(reverse=True)
 

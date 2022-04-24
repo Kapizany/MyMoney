@@ -6,9 +6,10 @@ export const loginAPI = {
     await api.post("api-token-auth/", data),
 
   validateToken: async (token: string) =>
-    await api.get("people/get_auth/", {
-      headers: { Authorization: `Token ${token}` },
-    }),
+    await api.get(
+      "people/get_auth/",
+      { headers: { Authorization: `Token ${token}` } }
+    ),
 
   createAccount: async (
     accountData: {

@@ -16,10 +16,11 @@ services:
       - MYSQL_TCP_PORT=3307
     ports:
       - "3307:3307"
-  
+
   backend:
     depends_on:
       - db
+    entrypoint: /entrypoint.sh
     build: ./my-money-backend
     container_name: mymoney-backend-container
     working_dir: /app
@@ -28,3 +29,15 @@ services:
       - 8000:8000
     volumes:
       - ./my-money-backend:/app/
+
+  frontend:
+    build: ./my-money-frontend
+    depends_on:
+      - backend
+    container_name: mymoney-frontend-container
+    ports:
+      - 3000:3000
+    volumes:
+      - ./my-money-frontend:/app/
+    stdin_open: true
+    tty: true

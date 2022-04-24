@@ -75,5 +75,5 @@ class Transaction(models.Model):
         choices=TRASACTIONS_CATEGORY
     )
     description = models.TextField()
-    value = models.DecimalField(max_digits=15, decimal_places=2)
+    value = models.DecimalField(max_digits=8, decimal_places=2)
     user = ForeignKey(Person, on_delete=models.CASCADE)
