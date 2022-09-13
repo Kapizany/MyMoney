@@ -12,6 +12,7 @@ ENV PATH="${PATH}:/root/.poetry/bin"
 # Install project dependencies
 COPY ./pyproject.toml pyproject.toml
 RUN curl -sSL https://install.python-poetry.org | python3 -
+RUN export PATH="/root/.local/bin:$PATH"
 RUN poetry config virtualenvs.create false
 RUN poetry install
 
